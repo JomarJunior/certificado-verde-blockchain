@@ -61,7 +61,8 @@ describe("CertificateRegistry", function () {
 
     it("should revert if non-admin tries to issue", async function () {
       await expect(
-        certificateRegistry.connect(user1).issueCertificate(await user2.getAddress(), "hash")
+        // @ts-ignore
+        certificateRegistry.connect(user1).issueCertificate(await user2.getAddress(), "hash") 
       ).to.be.revertedWith("Only admin can perform this action");
     });
   });
@@ -86,6 +87,7 @@ describe("CertificateRegistry", function () {
     });
 
     it("should not allow non-admin to revoke", async function () {
+      // @ts-ignore
       await expect(certificateRegistry.connect(user1).revokeCertificate(1))
         .to.be.revertedWith("Only admin can perform this action");
     });

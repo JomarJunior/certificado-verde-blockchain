@@ -41,6 +41,23 @@ services:
     networks:
       - cvb-network
 
+  database:
+    image: postgres:18.0-alpine
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=cvb_user
+      - POSTGRES_PASSWORD=cvb_password
+      - POSTGRES_DB=cvb_db
+    networks:
+      - cvb-network
+
 networks:
   cvb-network:
     driver: bridge
+
+volumes:
+  db-data:

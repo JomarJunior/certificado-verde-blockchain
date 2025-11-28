@@ -8,11 +8,15 @@ from miraveja_auth import (
 from miraveja_auth.domain import IClaimsParser
 from miraveja_auth.infrastructure.providers import KeycloakClaimsParser
 from miraveja_di import DIContainer
+from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine as DatabaseEngine
+from sqlalchemy.orm import Session as DatabaseSession
+from sqlalchemy.orm import sessionmaker
 
 from miraveja_log import IAsyncLogger, ILogger, LoggerConfig, LoggerFactory
 from miraveja_log.infrastructure import AsyncPythonLoggerAdapter, PythonLoggerAdapter
 
-from .configuration.app_config import AppConfig
+from .configuration import AppConfig, DatabaseConfig
 
 
 class AppDependencies:
@@ -38,5 +42,19 @@ class AppDependencies:
                 IOIDCDiscoveryService: lambda container: container.resolve(OIDCDiscoveryService),
                 IClaimsParser: lambda container: container.resolve(KeycloakClaimsParser),
                 IOAuth2Provider: lambda container: container.resolve(OAuth2Provider),
+                # Database
+                DatabaseConfig: lambda container: DatabaseConfig.from_env(),
+                DatabaseEngine: lambda container: create_engine(container.resolve(DatabaseConfig).database_url),
             },
+        )
+
+        container.register_scoped(
+            {
+                # Database Session
+                DatabaseSession: lambda container: sessionmaker(
+                    bind=container.resolve(DatabaseEngine),
+                    autoflush=False,
+                    autocommit=False,
+                )(),
+            }
         )

@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     git \
-    libgomp1 \
     && pip install --no-cache-dir poetry \
     && rm -rf /var/lib/apt/lists/*
 

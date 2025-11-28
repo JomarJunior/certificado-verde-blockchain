@@ -1,3 +1,5 @@
+from typing import Union
+
 import dotenv
 import uvicorn
 from fastapi import APIRouter, FastAPI
@@ -6,8 +8,12 @@ from miraveja_auth import FastAPIAuthenticator
 from miraveja_di import DIContainer
 from miraveja_di.infrastructure.fastapi_integration import ScopedContainerMiddleware
 
+from miraveja_log import IAsyncLogger, ILogger
+
 from .configuration import AppConfig
 from .dependencies import AppDependencies
+from .shared.errors import DomainException
+from .shared.middlewares import ErrorMiddleware, LoggingMiddleware
 
 # Load environment variables from a .env file
 dotenv.load_dotenv("./.env")
@@ -17,6 +23,8 @@ container: DIContainer = DIContainer()
 
 # Register dependencies
 AppDependencies.register_dependencies(container)
+
+logger: Union[ILogger, IAsyncLogger] = container.resolve(IAsyncLogger)
 
 # Initialize FastAPI app
 app_config: AppConfig = container.resolve(AppConfig)
@@ -30,6 +38,15 @@ app = FastAPI(
 )
 
 # Middlewares
+app.add_middleware(
+    ErrorMiddleware,
+    logger=logger,
+)
+
+app.add_middleware(
+    LoggingMiddleware.create_async,
+    logger=logger,
+)
 
 app.add_middleware(
     ScopedContainerMiddleware,  # type: ignore
@@ -61,6 +78,12 @@ fastapi_authenticator: FastAPIAuthenticator = container.resolve(FastAPIAuthentic
 @api_version1_router.get("/health")
 async def health_check():
     return {"status": "healthy"}
+
+
+# Error raising endpoint for testing
+@api_version1_router.get("/error")
+async def raise_error():
+    raise DomainException("This is a test exception for the error middleware.")
 
 
 # Catch-all route for undefined paths

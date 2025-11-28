@@ -1,0 +1,30 @@
+services:
+  blockchain:
+    build:
+      context: blockchain
+      dockerfile: Dockerfile
+    container_name: blockchain-node
+    ports:
+      - "8545:8545"
+    volumes:
+      - ./blockchain:/app
+      - /app/node_modules 
+    command: npx hardhat node
+    networks:
+      - cvb-network
+
+  blockchain-tests:
+    build:
+      context: blockchain
+      dockerfile: Dockerfile
+    container_name: blockchain-tests
+    depends_on:
+      - blockchain
+    volumes:
+      - ./blockchain:/app
+      - /app/node_modules
+    entrypoint: npx hardhat test
+  
+networks:
+  cvb-network:
+    driver: bridge

@@ -1,3 +1,5 @@
+# pylint: skip-file
+
 from logging.config import fileConfig
 
 from dotenv import load_dotenv

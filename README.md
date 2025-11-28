@@ -8,8 +8,9 @@ Este trabalho é apresentado como requisito parcial para aprovação na discipli
 > *Engenharia Eletrônica e de Computação* \
 > *<jomarjunior@poli.ufrj.br>*
 ---
-> **Manuella Andrade de Oliveira** \[{GitHub}\]\
-> *Engenharia Eletrônica e de Computação*
+> **Manuella Andrade de Oliveira** \
+> *Engenharia Eletrônica e de Computação* \
+> *<Manuella.oliveira@poli.ufrj.br>*
 ---
 > **Nichollas Marques** \[{GitHub}\] \
 > *{Curso}*

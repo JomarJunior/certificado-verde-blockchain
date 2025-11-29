@@ -76,23 +76,25 @@ def create_history_for(table_name: str):
 def upgrade() -> None:
     # Enums
     product_category_enum = postgresql.ENUM(
-        "Fruit",
-        "Grain",
-        "Resource",
-        "Oil",
-        "Other",
+        "FRUIT",
+        "GRAIN",
+        "RESOURCE",
+        "OIL",
+        "OTHER",
         name="product_category",
-        create_type=True,
+        create_type=False,
     )
+    product_category_enum.create(op.get_bind(), checkfirst=True)
 
     quantity_unit_enum = postgresql.ENUM(
-        "kg",
-        "liters",
-        "tons",
-        "units",
+        "KG",
+        "LITERS",
+        "TONS",
+        "UNITS",
         name="quantity_unit",
-        create_type=True,
+        create_type=False,
     )
+    quantity_unit_enum.create(op.get_bind(), checkfirst=True)
 
     document_type_enum = postgresql.ENUM(
         "CPF",
@@ -102,8 +104,9 @@ def upgrade() -> None:
         "INMETRO",
         "OTHER",
         name="document_type",
-        create_type=True,
+        create_type=False,
     )
+    document_type_enum.create(op.get_bind(), checkfirst=True)
 
     # --------------------------------------------------------
     # Main tables
@@ -114,9 +117,9 @@ def upgrade() -> None:
         sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
         sa.Column("name", sa.String, nullable=False),
         sa.Column("description", sa.Text),
-        sa.Column("category", sa.Enum(name="product_category"), nullable=False),
+        sa.Column("category", product_category_enum, nullable=False),
         sa.Column("quantity_value", sa.Float, nullable=False),
-        sa.Column("quantity_unit", sa.Enum(name="quantity_unit"), nullable=False),
+        sa.Column("quantity_unit", quantity_unit_enum, nullable=False),
         sa.Column("origin_country", sa.String, nullable=False),
         sa.Column("origin_state", sa.String),
         sa.Column("origin_city", sa.String),
@@ -127,39 +130,74 @@ def upgrade() -> None:
         sa.Column("metadata", postgresql.JSONB),
         sa.Column("tags", postgresql.ARRAY(sa.String)),
     )
+    # Add unique constraint on all columns that define a product except id
+    op.create_unique_constraint(
+        "uq_products_unique_fields",
+        "products",
+        [
+            "name",
+            "category",
+            "quantity_value",
+            "quantity_unit",
+            "origin_country",
+            "origin_state",
+            "origin_city",
+            "origin_latitude",
+            "origin_longitude",
+            "lot_number",
+        ],
+    )
 
     op.create_table(
         "producers",
         sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
         sa.Column("name", sa.String, nullable=False),
-        sa.Column("document_type", sa.Enum(name="document_type"), nullable=False),
+        sa.Column("document_type", document_type_enum, nullable=False),
         sa.Column("document_number", sa.String, nullable=False),
         sa.Column("address_country", sa.String, nullable=False),
-        sa.Column("address_state", sa.String),
-        sa.Column("address_city", sa.String),
-        sa.Column("address_latitude", sa.Float),
-        sa.Column("address_longitude", sa.Float),
-        sa.Column("car_code", sa.String),
-        sa.Column("contact_phone", sa.String),
-        sa.Column("contact_email", sa.String),
-        sa.Column("contact_website", sa.String),
-        sa.Column("metadata", postgresql.JSONB),
+        sa.Column("address_state", sa.String, nullable=True),
+        sa.Column("address_city", sa.String, nullable=True),
+        sa.Column("address_latitude", sa.Float, nullable=False),
+        sa.Column("address_longitude", sa.Float, nullable=False),
+        sa.Column("car_code", sa.String, nullable=True),
+        sa.Column("contact_phone", sa.String, nullable=True),
+        sa.Column("contact_email", sa.String, nullable=True),
+        sa.Column("contact_website", sa.String, nullable=True),
+        sa.Column("metadata", postgresql.JSONB, nullable=True),
+    )
+    # Add unique constraint on document_type and document_number
+    op.create_unique_constraint(
+        "uq_producers_document",
+        "producers",
+        ["document_type", "document_number"],
     )
 
     op.create_table(
         "auditors",
         sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
         sa.Column("name", sa.String, nullable=False),
-        sa.Column("document_type", sa.Enum(name="document_type"), nullable=False),
+        sa.Column("document_type", document_type_enum, nullable=False),
         sa.Column("document_number", sa.String, nullable=False),
+    )
+    # Add unique constraint on document_type and document_number
+    op.create_unique_constraint(
+        "uq_auditors_document",
+        "auditors",
+        ["document_type", "document_number"],
     )
 
     op.create_table(
         "certifiers",
         sa.Column("id", postgresql.UUID(as_uuid=True), primary_key=True),
         sa.Column("name", sa.String, nullable=False),
-        sa.Column("document_type", sa.Enum(name="document_type"), nullable=False),
+        sa.Column("document_type", document_type_enum, nullable=False),
         sa.Column("document_number", sa.String, nullable=False),
+    )
+    # Add unique constraint on document_type and document_number
+    op.create_unique_constraint(
+        "uq_certifiers_document",
+        "certifiers",
+        ["document_type", "document_number"],
     )
 
     op.create_table(

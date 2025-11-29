@@ -10,8 +10,14 @@ from miraveja_di.infrastructure.fastapi_integration import ScopedContainerMiddle
 
 from miraveja_log import IAsyncLogger, ILogger
 
+from .auditors_and_certifiers.infrastructure import AuditorsAndCertifiersDependencies
+from .auditors_and_certifiers.infrastructure.http import AuditorsAndCertifiersRoutes
 from .configuration import AppConfig
 from .dependencies import AppDependencies
+from .producers.infrastructure import ProducerDependencies
+from .producers.infrastructure.http import ProducerRoutes
+from .products.infrastructure import ProductDependencies
+from .products.infrastructure.http import ProductRoutes
 from .shared.errors import DomainException
 from .shared.middlewares import ErrorMiddleware, LoggingMiddleware
 
@@ -23,6 +29,9 @@ container: DIContainer = DIContainer()
 
 # Register dependencies
 AppDependencies.register_dependencies(container)
+ProductDependencies.register_dependencies(container)
+ProducerDependencies.register_dependencies(container)
+AuditorsAndCertifiersDependencies.register_dependencies(container)
 
 logger: Union[ILogger, IAsyncLogger] = container.resolve(IAsyncLogger)
 
@@ -71,7 +80,9 @@ api_version1_router: APIRouter = APIRouter(prefix="/v1")
 fastapi_authenticator: FastAPIAuthenticator = container.resolve(FastAPIAuthenticator)
 
 # Define API endpoints
-# ...
+ProductRoutes.register_routes(api_version1_router, container)
+ProducerRoutes.register_routes(api_version1_router, container)
+AuditorsAndCertifiersRoutes.register_routes(api_version1_router, container)
 
 
 # Health check endpoint

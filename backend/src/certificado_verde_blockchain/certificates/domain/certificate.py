@@ -1,8 +1,8 @@
 from datetime import datetime, timezone
-from typing import Annotated, ClassVar, Dict, List, Optional
+from typing import Annotated, ClassVar, List, Optional
 from uuid import UUID, uuid4
 
-from pydantic import BaseModel, ConfigDict, Field, field_serializer, model_serializer
+from pydantic import BaseModel, ConfigDict, Field, field_serializer
 
 from ...shared.errors import DomainException
 from .authenticity_proof import AuthenticityProof

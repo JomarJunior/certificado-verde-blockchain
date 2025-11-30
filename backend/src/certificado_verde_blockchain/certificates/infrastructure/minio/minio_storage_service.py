@@ -1,5 +1,4 @@
 import asyncio
-import os
 
 from botocore.client import BaseClient as Boto3Client
 

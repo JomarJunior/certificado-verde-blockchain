@@ -25,3 +25,14 @@ class AppConfig(BaseConfig):
         8000,
         description="The port number where the app will listen",
     )
+
+    @property
+    def major_version(self) -> str:
+        return f"v{self.version.split('.')[0]}"
+
+    @property
+    def api_url(self) -> str:
+        return f"http://{self.host}:{self.port}{self.root_path}/{self.major_version}"
+
+    def get_qr_code_url_by_key(self, key: str) -> str:
+        return f"{self.api_url.replace('0.0.0.0', 'localhost')}/certificates/qr_codes/{key}"

@@ -18,6 +18,8 @@ class Location(BaseModel):
     model_config: ClassVar[ConfigDict] = ConfigDict(frozen=True)
 
     country: Annotated[str, Field(description="The country of the location.", min_length=1, max_length=100)]
-    state: Annotated[Optional[str], Field(description="The state of the location.", max_length=100)]
-    city: Annotated[Optional[str], Field(description="The city of the location.", max_length=100)]
+    state: Annotated[Optional[str], Field(description="The state of the location.", max_length=100, default=None)] = (
+        None
+    )
+    city: Annotated[Optional[str], Field(description="The city of the location.", max_length=100, default=None)] = None
     coordinates: Annotated[Coordinates, Field(description="The geographical coordinates of the location.")]

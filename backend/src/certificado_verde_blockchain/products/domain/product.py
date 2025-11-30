@@ -29,10 +29,10 @@ class Product(BaseModel):
     id: Annotated[
         UUID,
         Field(
-            default=uuid4(),
             description="Unique identifier for the product.",
+            default_factory=uuid4,
         ),
-    ] = uuid4()
+    ]
     name: Annotated[str, Field(description="Name of the product.", min_length=1, max_length=255)]
     description: Annotated[Optional[str], Field(description="Detailed description of the product.", max_length=1000)]
     category: Annotated[ProductCategory, Field(description="Category of the product.")]

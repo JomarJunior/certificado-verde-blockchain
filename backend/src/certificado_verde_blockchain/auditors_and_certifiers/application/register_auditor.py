@@ -1,4 +1,5 @@
 from typing import Annotated, Any, Dict
+from uuid import uuid4
 
 from pydantic import BaseModel, Field
 
@@ -22,6 +23,7 @@ class RegisterAuditorHandler:
         await self._logger.info(f"Registering new auditor: {command.name}")
 
         auditor = Auditor(
+            id=uuid4(),
             name=command.name,
             document=command.document,
         )

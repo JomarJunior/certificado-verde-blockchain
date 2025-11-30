@@ -21,7 +21,7 @@ class Producer(BaseModel):
 
     model_config: ClassVar[ConfigDict] = ConfigDict(use_enum_values=True)
 
-    id: Annotated[UUID, Field(default=uuid4(), description="Unique identifier of the producer")] = uuid4()
+    id: Annotated[UUID, Field(default_factory=uuid4, description="Unique identifier of the producer")]
     name: Annotated[str, Field(description="Name of the producer", min_length=1, max_length=255)]
     document: Annotated[Document, Field(description="Document of the producer")]
     address: Annotated[Location, Field(description="Address of the producer")]

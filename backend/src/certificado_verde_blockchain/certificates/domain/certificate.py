@@ -38,7 +38,7 @@ class Certificate(BaseModel):
 
     model_config: ClassVar[ConfigDict] = ConfigDict(use_enum_values=True)
 
-    id: Annotated[UUID, Field(default=uuid4(), description="Unique identifier of the certificate.")] = uuid4()
+    id: Annotated[UUID, Field(default_factory=uuid4, description="Unique identifier of the certificate.")]
     version: Annotated[str, Field(description="Version of the certificate schema.", min_length=1, max_length=50)]
     product_id: Annotated[UUID, Field(description="Unique identifier of the certified product.")]
     producer_id: Annotated[UUID, Field(description="Unique identifier of the producer.")]

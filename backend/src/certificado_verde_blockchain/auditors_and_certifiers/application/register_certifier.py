@@ -1,4 +1,5 @@
 from typing import Annotated, Any, Dict, List
+from uuid import uuid4
 
 from pydantic import BaseModel, Field
 
@@ -23,6 +24,7 @@ class RegisterCertifierHandler:
         await self._logger.info(f"Registering new certifier: {command.name}")
 
         certifier = Certifier(
+            id=uuid4(),
             name=command.name,
             document=command.document,
             auditors=command.auditors,

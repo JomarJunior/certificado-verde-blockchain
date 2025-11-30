@@ -22,10 +22,10 @@ class Certifier(BaseModel):
     id: Annotated[
         UUID,
         Field(
-            default=uuid4(),
+            default_factory=uuid4,
             description="Unique identifier for the certifier.",
         ),
-    ] = uuid4()
+    ]
     name: Annotated[str, Field(description="Name of the certifier.", min_length=1, max_length=255)]
     document: Annotated[Document, Field(description="Document information of the certifier.")]
     auditors: Annotated[List[Auditor], Field(description="List of auditors associated with the certifier.")] = []

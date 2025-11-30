@@ -1,5 +1,5 @@
 from typing import Annotated, Any, Dict, List, Optional
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field
 
@@ -66,6 +66,7 @@ class RegisterPreCertificateHandler:
         await self._logger.info(f"Registering pre-certificate for product {command.product_id}.")
 
         pre_certificate = Certificate(
+            id=uuid4(),
             version=command.version,
             product_id=command.product_id,
             producer_id=command.producer_id,

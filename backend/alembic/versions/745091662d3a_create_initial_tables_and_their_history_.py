@@ -130,23 +130,6 @@ def upgrade() -> None:
         sa.Column("metadata", postgresql.JSONB),
         sa.Column("tags", postgresql.ARRAY(sa.String)),
     )
-    # Add unique constraint on all columns that define a product except id
-    op.create_unique_constraint(
-        "uq_products_unique_fields",
-        "products",
-        [
-            "name",
-            "category",
-            "quantity_value",
-            "quantity_unit",
-            "origin_country",
-            "origin_state",
-            "origin_city",
-            "origin_latitude",
-            "origin_longitude",
-            "lot_number",
-        ],
-    )
 
     op.create_table(
         "producers",
@@ -165,12 +148,6 @@ def upgrade() -> None:
         sa.Column("contact_website", sa.String, nullable=True),
         sa.Column("metadata", postgresql.JSONB, nullable=True),
     )
-    # Add unique constraint on document_type and document_number
-    op.create_unique_constraint(
-        "uq_producers_document",
-        "producers",
-        ["document_type", "document_number"],
-    )
 
     op.create_table(
         "auditors",
@@ -179,12 +156,6 @@ def upgrade() -> None:
         sa.Column("document_type", document_type_enum, nullable=False),
         sa.Column("document_number", sa.String, nullable=False),
     )
-    # Add unique constraint on document_type and document_number
-    op.create_unique_constraint(
-        "uq_auditors_document",
-        "auditors",
-        ["document_type", "document_number"],
-    )
 
     op.create_table(
         "certifiers",
@@ -192,12 +163,6 @@ def upgrade() -> None:
         sa.Column("name", sa.String, nullable=False),
         sa.Column("document_type", document_type_enum, nullable=False),
         sa.Column("document_number", sa.String, nullable=False),
-    )
-    # Add unique constraint on document_type and document_number
-    op.create_unique_constraint(
-        "uq_certifiers_document",
-        "certifiers",
-        ["document_type", "document_number"],
     )
 
     op.create_table(
@@ -225,12 +190,6 @@ def upgrade() -> None:
         sa.Column("authenticity_certifier_address", sa.String, nullable=True),
         sa.Column("canonical_hash", sa.String, nullable=True),
         sa.Column("blockchain_id", sa.String, nullable=True),
-    )
-    # Add unique constraint on product_id
-    op.create_unique_constraint(
-        "uq_certificates_product_id",
-        "certificates",
-        ["product_id"],
     )
 
     # --------------------------------------------------------

@@ -1,4 +1,5 @@
 from typing import Annotated, Any, Dict, List, Optional
+from uuid import uuid4
 
 from pydantic import BaseModel, Field
 
@@ -31,6 +32,7 @@ class RegisterProducerHandler:
         await self._logger.info(f"Registering new producer: {command.name}")
 
         producer = Producer(
+            id=uuid4(),
             name=command.name,
             document=command.document,
             address=command.address,

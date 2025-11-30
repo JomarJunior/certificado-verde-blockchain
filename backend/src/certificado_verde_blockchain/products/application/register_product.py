@@ -1,4 +1,5 @@
 from typing import Annotated, Any, Dict, List, Optional, Union
+from uuid import uuid4
 
 from pydantic import BaseModel, Field
 
@@ -31,6 +32,7 @@ class RegisterProductHandler:
         await self._logger.info(f"Registering new product: {command.name}")
 
         product = Product(
+            id=uuid4(),
             name=command.name,
             description=command.description,
             category=command.category,

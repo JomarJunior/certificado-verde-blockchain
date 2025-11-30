@@ -42,6 +42,23 @@ services:
     networks:
       - cvb-network
 
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: frontend-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_BACKEND_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - cvb-network
+
   database:
     image: postgres:18.0-alpine
     restart: always

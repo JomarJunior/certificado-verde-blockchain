@@ -1,3 +1,6 @@
+from boto3 import Session as Boto3Session
+from botocore.client import BaseClient as Boto3Client
+from botocore.client import Config as Boto3Config
 from miraveja_auth import (
     IOAuth2Provider,
     IOIDCDiscoveryService,
@@ -12,11 +15,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine as DatabaseEngine
 from sqlalchemy.orm import Session as DatabaseSession
 from sqlalchemy.orm import sessionmaker
+from web3 import Web3
 
 from miraveja_log import IAsyncLogger, ILogger, LoggerConfig, LoggerFactory
 from miraveja_log.infrastructure import AsyncPythonLoggerAdapter, PythonLoggerAdapter
 
-from .configuration import AppConfig, DatabaseConfig
+from .configuration import AppConfig, BlockchainConfig, DatabaseConfig, QRCodeConfig, StorageConfig
 
 
 class AppDependencies:
@@ -45,6 +49,24 @@ class AppDependencies:
                 # Database
                 DatabaseConfig: lambda container: DatabaseConfig.from_env(),
                 DatabaseEngine: lambda container: create_engine(container.resolve(DatabaseConfig).database_url),
+                # Blockchain
+                BlockchainConfig: lambda container: BlockchainConfig.from_env(),
+                Web3: lambda container: Web3(Web3.HTTPProvider(container.resolve(BlockchainConfig).provider_url)),
+                # Storage
+                StorageConfig: lambda container: StorageConfig.from_env(),
+                Boto3Client: lambda container: Boto3Session().client(
+                    "s3",
+                    endpoint_url=container.resolve(StorageConfig).endpoint_url,
+                    aws_access_key_id=container.resolve(StorageConfig).access_key,
+                    aws_secret_access_key=container.resolve(StorageConfig).secret_key,
+                    region_name=container.resolve(StorageConfig).region_name,
+                    config=Boto3Config(
+                        signature_version="s3v4",
+                        s3={"addressing_style": "path"},
+                    ),
+                ),
+                # QrCode
+                QRCodeConfig: lambda container: QRCodeConfig.from_env(),
             },
         )
 

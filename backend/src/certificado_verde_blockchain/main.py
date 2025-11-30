@@ -12,6 +12,8 @@ from miraveja_log import IAsyncLogger, ILogger
 
 from .auditors_and_certifiers.infrastructure import AuditorsAndCertifiersDependencies
 from .auditors_and_certifiers.infrastructure.http import AuditorsAndCertifiersRoutes
+from .certificates.infrastructure import CertificatesDependencies
+from .certificates.infrastructure.http import CertificatesRoutes
 from .configuration import AppConfig
 from .dependencies import AppDependencies
 from .producers.infrastructure import ProducerDependencies
@@ -32,6 +34,7 @@ AppDependencies.register_dependencies(container)
 ProductDependencies.register_dependencies(container)
 ProducerDependencies.register_dependencies(container)
 AuditorsAndCertifiersDependencies.register_dependencies(container)
+CertificatesDependencies.register_dependencies(container)
 
 logger: Union[ILogger, IAsyncLogger] = container.resolve(IAsyncLogger)
 
@@ -83,6 +86,7 @@ fastapi_authenticator: FastAPIAuthenticator = container.resolve(FastAPIAuthentic
 ProductRoutes.register_routes(api_version1_router, container)
 ProducerRoutes.register_routes(api_version1_router, container)
 AuditorsAndCertifiersRoutes.register_routes(api_version1_router, container)
+CertificatesRoutes.register_routes(api_version1_router, container)
 
 
 # Health check endpoint

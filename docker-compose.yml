@@ -9,7 +9,7 @@ services:
     volumes:
       - ./blockchain:/app
       - /app/node_modules
-    command: npx hardhat node
+    command: npx hardhat node --port 8545 --hostname 0.0.0.0
     networks:
       - cvb-network
 
@@ -34,8 +34,9 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+      - ./blockchain/artifacts/contracts:/abi
     environment:
-      - BLOCKCHAIN_URL=http://blockchain-node:8545
+      - BLOCKCHAIN_URL=http://blockchain:8545
     depends_on:
       - blockchain
     networks:
@@ -55,9 +56,25 @@ services:
     networks:
       - cvb-network
 
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-data:/data
+    networks:
+      - cvb-network
+
 networks:
   cvb-network:
     driver: bridge
 
 volumes:
   db-data:
+  minio-data:

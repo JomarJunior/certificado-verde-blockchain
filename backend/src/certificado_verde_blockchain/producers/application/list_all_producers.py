@@ -10,7 +10,7 @@ class ListAllProducersHandler:
         self._producer_repository = producer_repository
         self._logger = logger
 
-    async def handle(self) -> List[Dict[str, Any]]:
+    async def handle(self) -> Dict[str, Any]:
 
         await self._logger.info("Listing all producers")
 
@@ -18,4 +18,4 @@ class ListAllProducersHandler:
 
         await self._logger.info(f"Found {len(producers)} producers")
 
-        return [producer.model_dump() for producer in producers]
+        return {"producers": [producer.model_dump() for producer in producers]}

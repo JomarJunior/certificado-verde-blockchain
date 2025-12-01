@@ -78,4 +78,4 @@ class RegisterPreCertificateHandler:
 
         self._repository.save(pre_certificate)
         await self._logger.info(f"Pre-certificate {pre_certificate.id} registered successfully.")
-        return pre_certificate.model_dump()
+        return {"pre_certificate": pre_certificate.model_dump()}

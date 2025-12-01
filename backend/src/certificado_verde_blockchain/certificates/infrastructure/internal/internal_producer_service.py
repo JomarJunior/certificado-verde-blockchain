@@ -63,7 +63,7 @@ class InternalProducerService(IProducerService):
             raise DomainException("Invalid producer document number format.")
 
         car_code = producer.get("car_code")
-        if not isinstance(car_code, str):
+        if car_code is not None and not isinstance(car_code, str):
             raise DomainException("Invalid producer car code format.")
 
         address_country = address.get("country")
@@ -71,11 +71,11 @@ class InternalProducerService(IProducerService):
             raise DomainException("Invalid producer address country format.")
 
         address_state = address.get("state")
-        if not isinstance(address_state, str):
+        if address_state is not None and not isinstance(address_state, str):
             raise DomainException("Invalid producer address state format.")
 
         address_city = address.get("city")
-        if not isinstance(address_city, str):
+        if address_city is not None and not isinstance(address_city, str):
             raise DomainException("Invalid producer address city format.")
 
         address_latitude = coordinates.get("latitude")

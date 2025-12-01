@@ -152,3 +152,13 @@ class Certificate(BaseModel):
         if self.is_pre_issued:
             raise DomainException("Cannot revoke a pre-issued certificate.", 400)
         self.valid_until = datetime.now(timezone.utc).isoformat()
+
+    def set_pdf_hash(self, pdf_hash: str) -> None:
+        """Set the PDF hash in the authenticity proof.
+
+        Args:
+            pdf_hash (str): The hash of the PDF document associated with the certificate.
+        """
+        if self.authenticity_proof is None:
+            raise DomainException("Cannot set PDF hash on a pre-issued certificate.", 400)
+        self.authenticity_proof.pdf_hash = pdf_hash

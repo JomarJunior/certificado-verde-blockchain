@@ -30,6 +30,7 @@ class CertificateEntity(Base):
         authenticity_qr_code_url (Optional[str]): URL of the QR code for the authenticity proof.
         authenticity_certifier_signature (Optional[str]): Digital signature for the authenticity proof.
         authenticity_certifier_address (Optional[str]): Blockchain address of the certifier for the authenticity proof.
+        authenticity_pdf_hash (Optional[str]): Hash of the PDF document associated with the certificate.
         canonical_hash (Optional[str]): Canonical hash of the certificate data for integrity verification.
         blockchain_id (Optional[str]): Identifier of the certificate in the blockchain.
     """
@@ -53,6 +54,7 @@ class CertificateEntity(Base):
     authenticity_qr_code_url: Mapped[Optional[str]] = mapped_column(sa.String, nullable=True)
     authenticity_certifier_signature: Mapped[Optional[str]] = mapped_column(sa.Text, nullable=True)
     authenticity_certifier_address: Mapped[Optional[str]] = mapped_column(sa.String, nullable=True)
+    authenticity_pdf_hash: Mapped[Optional[str]] = mapped_column(sa.String, nullable=True)
     canonical_hash: Mapped[Optional[str]] = mapped_column(sa.String, nullable=True)
     blockchain_id: Mapped[Optional[str]] = mapped_column(sa.String, nullable=True)
 
@@ -89,6 +91,7 @@ class CertificateEntity(Base):
             authenticity_certifier_address=(
                 certificate.authenticity_proof.certifier_address if certificate.authenticity_proof else None
             ),
+            authenticity_pdf_hash=(certificate.authenticity_proof.pdf_hash if certificate.authenticity_proof else None),
             canonical_hash=certificate.canonical_hash,
             blockchain_id=certificate.blockchain_id,
         )
@@ -111,6 +114,7 @@ class CertificateEntity(Base):
                 qr_code_url=self.authenticity_qr_code_url,
                 certifier_signature=self.authenticity_certifier_signature,
                 certifier_address=self.authenticity_certifier_address,
+                pdf_hash=self.authenticity_pdf_hash,
             )
 
         return Certificate(

@@ -1,4 +1,4 @@
-from typing import TypedDict
+from typing import Optional, TypedDict
 
 
 class CanonicalProducer(TypedDict):
@@ -22,9 +22,9 @@ class CanonicalProducer(TypedDict):
     name: str
     document_type: str
     document_number: str
-    car_code: str
+    car_code: Optional[str]
     address_country: str
-    address_state: str
-    address_city: str
+    address_state: Optional[str]
+    address_city: Optional[str]
     address_latitude: float
     address_longitude: float

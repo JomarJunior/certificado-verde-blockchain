@@ -58,11 +58,11 @@ class InternalProductService(IProductService):
             raise DomainException("Invalid product origin country format.")
 
         origin_state = origin.get("state")
-        if not isinstance(origin_state, str):
+        if origin_state is not None and not isinstance(origin_state, str):
             raise DomainException("Invalid product origin state format.")
 
         origin_city = origin.get("city")
-        if not isinstance(origin_city, str):
+        if origin_city is not None and not isinstance(origin_city, str):
             raise DomainException("Invalid product origin city format.")
 
         origin_latitude = coordinates.get("latitude")
@@ -82,7 +82,7 @@ class InternalProductService(IProductService):
             raise DomainException("Invalid product quantity unit format.")
 
         lot_number = product.get("lot_number")
-        if not isinstance(lot_number, str):
+        if lot_number is not None and not isinstance(lot_number, str):
             raise DomainException("Invalid product lot number format.")
 
         return CanonicalProduct(

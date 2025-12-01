@@ -31,6 +31,58 @@ class SqlCertificateRepository(ICertificateRepository):
             self._db_session.rollback()
             raise
 
+    def find_by_canonical_hash(self, canonical_hash: str) -> Optional[Certificate]:
+        try:
+            certificate_entity = (
+                self._db_session.query(CertificateEntity).filter_by(canonical_hash=canonical_hash).first()
+            )
+            if certificate_entity:
+                return certificate_entity.to_domain()
+            return None
+        except:
+            self._db_session.rollback()
+            raise
+
+    def find_by_product_id(self, product_id: UUID) -> List[Certificate]:
+        try:
+            certificate_entities = self._db_session.query(CertificateEntity).filter_by(product_id=str(product_id)).all()
+            return [entity.to_domain() for entity in certificate_entities]
+        except:
+            self._db_session.rollback()
+            raise
+
+    def find_by_producer_id(self, producer_id: UUID) -> List[Certificate]:
+        try:
+            certificate_entities = (
+                self._db_session.query(CertificateEntity).filter_by(producer_id=str(producer_id)).all()
+            )
+            return [entity.to_domain() for entity in certificate_entities]
+        except:
+            self._db_session.rollback()
+            raise
+
+    def find_by_certifier_id(self, certifier_id: UUID) -> List[Certificate]:
+        try:
+            certificate_entities = (
+                self._db_session.query(CertificateEntity).filter_by(certifier_id=str(certifier_id)).all()
+            )
+            return [entity.to_domain() for entity in certificate_entities]
+        except:
+            self._db_session.rollback()
+            raise
+
+    def find_by_pdf_hash(self, pdf_hash: str) -> Optional[Certificate]:
+        try:
+            certificate_entity = (
+                self._db_session.query(CertificateEntity).filter_by(authenticity_pdf_hash=pdf_hash).first()
+            )
+            if certificate_entity:
+                return certificate_entity.to_domain()
+            return None
+        except:
+            self._db_session.rollback()
+            raise
+
     def save(self, certificate: Certificate) -> None:
         certificate_entity = CertificateEntity.from_domain(certificate)
         try:

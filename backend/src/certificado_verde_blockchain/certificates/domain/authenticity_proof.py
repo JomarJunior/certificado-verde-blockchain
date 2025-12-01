@@ -1,6 +1,6 @@
-from typing import Annotated, ClassVar, Optional
+from typing import Annotated, Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, Field
 
 
 class AuthenticityProof(BaseModel):
@@ -13,8 +13,6 @@ class AuthenticityProof(BaseModel):
         certifier_signature (str): Digital signature that validates the certificate's data and origin.
         certifier_address (str): Blockchain address of the certifier who issued the certificate.
     """
-
-    model_config: ClassVar[ConfigDict] = ConfigDict(frozen=True)
 
     serial_code: Annotated[
         str, Field(description="Unique code generated for each certificate to ensure its authenticity.")
@@ -31,3 +29,6 @@ class AuthenticityProof(BaseModel):
     certifier_address: Annotated[
         str, Field(description="Blockchain address of the certifier who issued the certificate.")
     ]
+    pdf_hash: Annotated[
+        Optional[str], Field(default=None, description="Hash of the PDF document associated with the certificate.")
+    ] = None

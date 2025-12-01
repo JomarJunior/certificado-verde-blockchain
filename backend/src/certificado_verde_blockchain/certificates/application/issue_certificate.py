@@ -116,4 +116,4 @@ class IssueCertificateHandler:
         self._repository.save(certificate)
         await self._logger.info(f"Successfully issued certificate {certificate.id}.")
 
-        return certificate.model_dump()
+        return {"certificate": certificate.model_dump()}

@@ -1,4 +1,6 @@
-from typing import TypedDict
+from typing import Optional, TypedDict
+
+from click import Option
 
 
 class CanonicalProduct(TypedDict):
@@ -25,8 +27,8 @@ class CanonicalProduct(TypedDict):
     quantity_value: float
     quantity_unit: str
     origin_country: str
-    origin_state: str
-    origin_city: str
+    origin_state: Optional[str]
+    origin_city: Optional[str]
     origin_latitude: float
     origin_longitude: float
-    lot_number: str
+    lot_number: Optional[str]

@@ -1,7 +1,12 @@
 from fastapi import APIRouter
 from miraveja_di import DIContainer
 
-from ...application import IssueCertificateCommand, RegisterPreCertificateCommand
+from ...application import (
+    IssueCertificateCommand,
+    RegisterPDFHashCommand,
+    RegisterPreCertificateCommand,
+    ValidatePDFFileCommand,
+)
 from .certificates_controller import CertificatesController
 
 
@@ -35,3 +40,15 @@ class CertificatesRoutes:
         @router.get("/certificates/qr_codes/{qr_code_key}")
         async def find_qr_code_by_key(qr_code_key: str):
             return await certificates_controller.find_qr_code_by_key(qr_code_key)
+
+        @router.post("/certificates/{certificate_id}/pdf_hash", status_code=201)
+        async def register_pdf_hash(certificate_id: str, command: RegisterPDFHashCommand):
+            return await certificates_controller.register_pdf_hash(certificate_id, command)
+
+        @router.get("/certificates/validate/{certificate_hash}")
+        async def validate_certificate(certificate_hash: str):
+            return await certificates_controller.validate_certificate(certificate_hash)
+
+        @router.post("/certificates/validate/pdf")
+        async def validate_pdf_file(command: ValidatePDFFileCommand):
+            return await certificates_controller.validate_pdf_file(command)

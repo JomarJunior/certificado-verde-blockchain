@@ -14,7 +14,7 @@ class ListPreCertificatesHandler:
         self._repository = repository
         self._logger = logger
 
-    async def handle(self) -> List[Dict[str, Any]]:
+    async def handle(self) -> Dict[str, Any]:
         """Handles the listing of all pre-certificates.
 
         Returns:
@@ -24,4 +24,4 @@ class ListPreCertificatesHandler:
         all_certificates: List[Certificate] = self._repository.list_all()
         pre_certificates = [cert for cert in all_certificates if cert.is_pre_issued]
         await self._logger.info(f"Found {len(pre_certificates)} pre-certificates.")
-        return [cert.model_dump() for cert in pre_certificates]
+        return {"pre_certificates": [cert.model_dump() for cert in pre_certificates]}

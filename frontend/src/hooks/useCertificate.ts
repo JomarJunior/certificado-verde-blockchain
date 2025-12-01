@@ -1,5 +1,5 @@
 import { createContext, use } from "react";
-import type { Certificate, IssuanceRequest } from "../api/certificate-api";
+import type { Certificate, CertificateRegisterData, IssueCertificateRequest, RegisterPDFHashRequest, ValidatePDFFileRequest } from "../api/certificate-api";
 
 export interface CertificateContextProps {
     // State
@@ -8,8 +8,11 @@ export interface CertificateContextProps {
     // Actions
     fetchAllPreCertificates: () => Promise<Certificate[]>;
     fetchOneCertificateById: (id: string) => Promise<Certificate>;
-    registerNewPreCertificate: (certificateData: Omit<Certificate, 'id' | 'issued_at' | 'valid_until' | 'last_audited_at' | 'authenticity_proof' | 'canonical_hash' | 'blockchain_id' | 'pre_issued_hash'>) => Promise<Certificate>;
-    issuePreCertificate: (id: string, issuanceRequest: IssuanceRequest) => Promise<Certificate>;
+    registerNewPreCertificate: (certificateData: CertificateRegisterData) => Promise<Certificate>;
+    issuePreCertificate: (id: string, issueCertificateRequest: IssueCertificateRequest) => Promise<Certificate>;
+    registerPDFHash: (id: string, registerPDFHashRequest: RegisterPDFHashRequest) => Promise<string>;
+    validateCertificate: (certificateHash: string) => Promise<boolean>;
+    validatePDFFile: (validatePDFFileRequest: ValidatePDFFileRequest) => Promise<boolean>;
 }
 
 export const defaultCertificateContextProps: CertificateContextProps = {
@@ -19,6 +22,9 @@ export const defaultCertificateContextProps: CertificateContextProps = {
     fetchOneCertificateById: async () => { throw new Error('fetchOneCertificateById not implemented'); },
     registerNewPreCertificate: async () => { throw new Error('registerNewPreCertificate not implemented'); },
     issuePreCertificate: async () => { throw new Error('issuePreCertificate not implemented'); },
+    registerPDFHash: async () => { throw new Error('registerPDFHash not implemented'); },
+    validateCertificate: async () => { throw new Error('validateCertificate not implemented'); },
+    validatePDFFile: async () => { throw new Error('validatePDFFile not implemented'); },
 };
 
 export const CertificateContext = createContext<CertificateContextProps>(defaultCertificateContextProps);

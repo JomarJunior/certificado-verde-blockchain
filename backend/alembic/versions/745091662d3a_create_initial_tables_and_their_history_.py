@@ -188,8 +188,56 @@ def upgrade() -> None:
         sa.Column("authenticity_qr_code_url", sa.String, nullable=True),
         sa.Column("authenticity_certifier_signature", sa.Text, nullable=True),
         sa.Column("authenticity_certifier_address", sa.String, nullable=True),
+        sa.Column("authenticity_pdf_hash", sa.String, nullable=True),
         sa.Column("canonical_hash", sa.String, nullable=True),
         sa.Column("blockchain_id", sa.String, nullable=True),
+    )
+
+    # Create indexes
+    op.create_index(
+        "ix_certificates_product_id",
+        "certificates",
+        ["product_id"],
+    )
+    op.create_index(
+        "ix_certificates_producer_id",
+        "certificates",
+        ["producer_id"],
+    )
+    op.create_index(
+        "ix_certificates_certifier_id",
+        "certificates",
+        ["certifier_id"],
+    )
+    op.create_index(
+        "ix_certificates_canonical_hash",
+        "certificates",
+        ["canonical_hash"],
+        unique=True,
+    )
+    op.create_index(
+        "ix_certificates_authenticity_pdf_hash",
+        "certificates",
+        ["authenticity_pdf_hash"],
+        unique=True,
+    )
+    op.create_index(
+        "ix_producers_document_number",
+        "producers",
+        ["document_number"],
+        unique=True,
+    )
+    op.create_index(
+        "ix_certifiers_document_number",
+        "certifiers",
+        ["document_number"],
+        unique=True,
+    )
+    op.create_index(
+        "ix_auditors_document_number",
+        "auditors",
+        ["document_number"],
+        unique=True,
     )
 
     # --------------------------------------------------------
@@ -211,6 +259,15 @@ def upgrade() -> None:
 # Downgrade
 # ------------------------------------------------------------
 def downgrade() -> None:
+    op.drop_index("ix_certificates_authenticity_pdf_hash", table_name="certificates")
+    op.drop_index("ix_certificates_canonical_hash", table_name="certificates")
+    op.drop_index("ix_certificates_certifier_id", table_name="certificates")
+    op.drop_index("ix_certificates_producer_id", table_name="certificates")
+    op.drop_index("ix_certificates_product_id", table_name="certificates")
+    op.drop_index("ix_certifiers_document_number", table_name="certifiers")
+    op.drop_index("ix_producers_document_number", table_name="producers")
+    op.drop_index("ix_auditors_document_number", table_name="auditors")
+
     for tbl in [
         "certificates",
         "certifier_auditors",

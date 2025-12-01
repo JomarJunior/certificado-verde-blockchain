@@ -41,6 +41,8 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             await self.add_log("Body:")
             await self.add_log("")
             for line in body.decode().splitlines():
+                if len(line) >= 150:
+                    line = f"{line[:150]}... [truncated, original length: {len(line)}]"
                 if "password" in line.lower():
                     await self.add_log("****")
                 elif "token" in line.lower():

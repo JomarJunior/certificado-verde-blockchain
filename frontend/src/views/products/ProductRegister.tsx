@@ -60,7 +60,7 @@ const validateQuantityUnit = (value: ValueType): string | null => {
     return null;
 }
 
-const example_products: ProductRegisterData[] = [
+const exampleProducts: ProductRegisterData[] = [
     {
         name: 'Banana Orgânica',
         description: 'Banana orgânica cultivada sem pesticidas.',
@@ -134,8 +134,7 @@ const ProductRegister: React.FC = () => {
         metadata: {},
     });
     const { setDocumentTitle } = useApp();
-    const { registerNewProduct, fetchAllProducts, isLoading } = useProductContext();
-    const [productsCount, setProductsCount] = React.useState<number>(0);
+    const { registerNewProduct, fetchAllProducts, isLoading, products } = useProductContext();
 
     const quantityFields = [
         {
@@ -292,12 +291,12 @@ const ProductRegister: React.FC = () => {
     }
 
     const handleFillExample = () => {
-        const index = productsCount;
-        if (index >= example_products.length) {
+        const index = products?.length ?? 99;
+        if (index >= exampleProducts.length) {
             alert("Todos os exemplos de produtos já foram preenchidos.");
             return;
         }
-        const example = example_products[index];
+        const example = exampleProducts[index];
         setProductData(example);
         setProductQuantityData(example.quantity);
         setProductOriginData(example.origin);
@@ -309,9 +308,7 @@ const ProductRegister: React.FC = () => {
     }, [setDocumentTitle]);
 
     React.useEffect(() => {
-        void fetchAllProducts().then(products => {
-            setProductsCount(products.length);
-        });
+        void fetchAllProducts();
     }, [fetchAllProducts]);
 
     if (isLoading) {
@@ -388,10 +385,10 @@ const ProductRegister: React.FC = () => {
                             onClick={handleFillExample}
                             sx={{ marginLeft: 2 }}
                             startIcon={<Icon>auto_fix_high</Icon>}
-                            disabled={productsCount >= example_products.length}
+                            disabled={(products?.length ?? 99) >= exampleProducts.length}
                         >
                             Preencher Exemplo
-                            {productsCount < example_products.length ? ` (${productsCount + 1}/${example_products.length})` : ''}
+                            {products && products.length < exampleProducts.length ? ` (${products.length + 1}/${exampleProducts.length})` : ''}
                         </Button>
                     </Box>
                     <Box sx={{ marginRight: 2 }}>

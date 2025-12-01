@@ -14,15 +14,16 @@ const ProductsOverview: React.FC = () => {
 
     React.useEffect(() => {
         setDocumentTitle("Visão Geral dos Produtos");
-    }, [setDocumentTitle]);
+        setShowRegisterModal(false);
+    }, [setDocumentTitle, products]);
+
+    React.useEffect(() => {
+        setDocumentTitle("Visão Geral dos Produtos");
+    }, [showRegisterModal, setDocumentTitle]);
 
     React.useEffect(() => {
         void fetchAllProducts();
     }, [fetchAllProducts]);
-
-    React.useEffect(() => {
-        setShowRegisterModal(false);
-    }, [products]);
 
     if (isLoading) {
         return <div>Loading...</div>;

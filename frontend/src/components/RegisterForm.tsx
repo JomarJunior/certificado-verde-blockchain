@@ -87,17 +87,7 @@ const getFieldComponent = <T extends object>(
                         multiline
                         minRows={3}
                         value={value as string ?? fieldDef.defaultValue ?? ''}
-                        label={fieldDef.label}
                         placeholder={fieldDef.placeholder}
-                        slotProps={{
-                            input: {
-                                startAdornment: fieldDef.icon ? (
-                                    <InputAdornment position="start">
-                                        {fieldDef.icon}
-                                    </InputAdornment>
-                                ) : undefined
-                            }
-                        }}
                         sx={{
                             '& .MuiInputBase-input': {
                                 overflow: 'hidden',
@@ -122,13 +112,16 @@ const getFieldComponent = <T extends object>(
                 control={
                     <Select
                         fullWidth
-                        value={value as string | number | boolean ?? fieldDef.defaultValue ?? ''}
+                        value={value as readonly string[] ?? fieldDef.defaultValue ?? ''}
                         multiple={fieldDef.multiple ?? false}
-                        onChange={(e) => onChange(e.target.value as string | number | boolean)}
+                        onChange={(e) => onChange(e.target.value as ValueType)}
                         error={Boolean(validationError)}
                     >
                         {fieldDef.items?.map((item) => (
                             <MenuItem key={String(item.value)} value={String(item.value)}>
+                                {fieldDef.multiple ? (
+                                    <Checkbox checked={(value as readonly string[] | undefined)?.includes(item.value as string) ?? false} />
+                                ) : null}
                                 {item.label}
                             </MenuItem>
                         ))}
@@ -241,7 +234,18 @@ export default function RegisterForm<T extends object>(
                 let value = target[fieldDef.field] as ValueType;
 
                 if (fieldDef.multiple && Array.isArray(value)) {
-                    value = value.map((v: { name: string }) => v.name) as readonly string[];
+                    if (typeof value[0] === 'object' && value[0] !== null) {
+                        if ('id' in value[0]) {
+                            // If there is an 'id' field, map to array of ids
+                            value = value.map((v: { id: string }) => v.id) as readonly string[];
+                        } else if ('name' in value[0]) {
+                            // If there is a 'name' field, map to array of names
+                            value = value.map((v: { name: string }) => v.name) as readonly string[];
+                        } else {
+                            // Fallback: stringify the objects
+                            value = value.map((v: unknown) => JSON.stringify(v)) as readonly string[];
+                        }
+                    }
                 }
 
                 return (

@@ -25,11 +25,6 @@ const HomePage: React.FC = () => {
                     icon: "list",
                     to: "/products",
                 },
-                {
-                    label: "Registrar",
-                    icon: "add",
-                    to: "/products/register",
-                },
             ]
         },
         {
@@ -39,11 +34,6 @@ const HomePage: React.FC = () => {
                     label: "Listar",
                     icon: "list",
                     to: "/producers",
-                },
-                {
-                    label: "Registrar",
-                    icon: "add",
-                    to: "/producers/register",
                 },
             ]
         },
@@ -55,11 +45,6 @@ const HomePage: React.FC = () => {
                     icon: "list",
                     to: "/auditors",
                 },
-                {
-                    label: "Registrar",
-                    icon: "add",
-                    to: "/auditors/register",
-                },
             ]
         },
         {
@@ -70,25 +55,20 @@ const HomePage: React.FC = () => {
                     icon: "list",
                     to: "/certifiers",
                 },
-                {
-                    label: "Registrar",
-                    icon: "add",
-                    to: "/certifiers/register",
-                },
             ]
         },
         {
             label: "🌿 Certificados Verdes",
             buttons: [
                 {
-                    label: "Listar Pre-emitidos",
+                    label: "Listar Pre-Certificados",
                     icon: "list",
                     to: "/certificates/pre-issued",
                 },
                 {
-                    label: "Registrar",
-                    icon: "add",
-                    to: "/certificates/register",
+                    label: "Verificar",
+                    icon: "verified",
+                    to: "/certificates/verify",
                 },
             ]
         }

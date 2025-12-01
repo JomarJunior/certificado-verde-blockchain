@@ -45,7 +45,6 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
             setIsLoading(true);
             try {
                 const newProduct = await productApi.registerProduct(productData);
-                console.log("New product registered:", newProduct);
                 setProducts((prevProducts) => (prevProducts ? [...prevProducts, newProduct] : [newProduct]));
                 return newProduct;
             } finally {

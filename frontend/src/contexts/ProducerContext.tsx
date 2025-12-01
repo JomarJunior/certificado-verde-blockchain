@@ -9,7 +9,10 @@ export function ProducerProvider({ children }: { children: React.ReactNode }) {
 
     // Fetch all producers
     const fetchAllProducers = useCallback(
-        async (): Promise<Producer[]> => {
+        async ({ force }: { force?: boolean } = { force: false }): Promise<Producer[]> => {
+            if (producers && !force) {
+                return Promise.resolve(producers);
+            }
             setIsLoading(true);
             try {
                 const fetchedProducers = await producerApi.fetchProducers();
@@ -18,7 +21,7 @@ export function ProducerProvider({ children }: { children: React.ReactNode }) {
             } finally {
                 setIsLoading(false);
             }
-        }, []);
+        }, [producers]);
 
     // Fetch one producer by ID
     const fetchOneProducerById = useCallback(

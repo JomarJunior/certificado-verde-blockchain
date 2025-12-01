@@ -9,7 +9,10 @@ export function CertifierProvider({ children }: { children: React.ReactNode }) {
 
     // Fetch all certifiers
     const fetchAllCertifiers = useCallback(
-        async (): Promise<Certifier[]> => {
+        async ({ force }: { force?: boolean } = { force: false }): Promise<Certifier[]> => {
+            if (certifiers && !force) {
+                return Promise.resolve(certifiers);
+            }
             setIsLoading(true);
             try {
                 const fetchedCertifiers = await certifierApi.fetchCertifiers();
@@ -18,7 +21,7 @@ export function CertifierProvider({ children }: { children: React.ReactNode }) {
             } finally {
                 setIsLoading(false);
             }
-        }, []);
+        }, [certifiers]);
 
     // Fetch one certifier by ID
     const fetchOneCertifierById = useCallback(

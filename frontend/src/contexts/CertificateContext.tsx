@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import type { Certificate, IssuanceRequest } from '../api/certificate-api';
+import type { Certificate, CertificateRegisterData, IssueCertificateRequest, RegisterPDFHashRequest, ValidatePDFFileRequest } from '../api/certificate-api';
 import { certificateApi } from '../api/certificate-api';
 import { CertificateContext, defaultCertificateContextProps, type CertificateContextProps } from '../hooks/useCertificate';
 
@@ -9,7 +9,10 @@ export function CertificateProvider({ children }: { children: React.ReactNode })
 
     // Fetch all pre certificates
     const fetchAllPreCertificates = useCallback(
-        async (): Promise<Certificate[]> => {
+        async ({ force }: { force?: boolean } = { force: false }): Promise<Certificate[]> => {
+            if (certificates && !force) {
+                return Promise.resolve(certificates);
+            }
             setIsLoading(true);
             try {
                 const fetchedCertificates = await certificateApi.fetchPreCertificates();
@@ -18,7 +21,7 @@ export function CertificateProvider({ children }: { children: React.ReactNode })
             } finally {
                 setIsLoading(false);
             }
-        }, []);
+        }, [certificates]);
 
     // Fetch one certificate by ID
     const fetchOneCertificateById = useCallback(
@@ -34,7 +37,7 @@ export function CertificateProvider({ children }: { children: React.ReactNode })
 
     // Register a new pre certificate
     const registerNewPreCertificate = useCallback(
-        async (certificateData: Omit<Certificate, 'id' | 'issued_at' | 'valid_until' | 'last_audited_at' | 'authenticity_proof' | 'canonical_hash' | 'blockchain_id' | 'pre_issued_hash'>): Promise<Certificate> => {
+        async (certificateData: CertificateRegisterData): Promise<Certificate> => {
             setIsLoading(true);
             try {
                 const newCertificate = await certificateApi.registerPreCertificate(certificateData);
@@ -47,16 +50,49 @@ export function CertificateProvider({ children }: { children: React.ReactNode })
 
     // Issue a pre certificate
     const issuePreCertificate = useCallback(
-        async (id: string, issuanceRequest: IssuanceRequest): Promise<Certificate> => {
+        async (id: string, issueCertificateRequest: IssueCertificateRequest): Promise<Certificate> => {
+            const issuedCertificate = await certificateApi.issueCertificate(id, issueCertificateRequest);
+            // Update the certificate in the state
+            setCertificates((prevCertificates) => {
+                if (!prevCertificates) return null;
+                return prevCertificates.filter(cert => cert.id !== id); // When issued, the pre-certificate is removed from the list
+            });
+            return issuedCertificate;
+
+        }, []);
+
+    // Register PDF Hash
+    const registerPDFHash = useCallback(
+        async (id: string, registerPDFHashRequest: RegisterPDFHashRequest): Promise<string> => {
+            const pdfHash = await certificateApi.registerPDFHash(id, registerPDFHashRequest);
+
+            setCertificates((prevCertificates) => {
+                if (!prevCertificates) return null;
+                return prevCertificates.map(cert => cert.id === id ? { ...cert, authenticity_proof: { ...cert.authenticity_proof, pdf_hash: pdfHash } } : cert);
+            });
+
+            return pdfHash;
+        }, []);
+
+    // Validate Certificate
+    const validateCertificate = useCallback(
+        async (certificateHash: string): Promise<boolean> => {
             setIsLoading(true);
             try {
-                const issuedCertificate = await certificateApi.issueCertificate(id, issuanceRequest);
-                // Update the certificate in the state
-                setCertificates((prevCertificates) => {
-                    if (!prevCertificates) return null;
-                    return prevCertificates.map(cert => cert.id === issuedCertificate.id ? issuedCertificate : cert);
-                });
-                return issuedCertificate;
+                const isValid = await certificateApi.validateCertificate(certificateHash);
+                return isValid;
+            } finally {
+                setIsLoading(false);
+            }
+        }, []);
+
+    // Validate PDF File
+    const validatePDFFile = useCallback(
+        async (validatePDFFileRequest: ValidatePDFFileRequest): Promise<boolean> => {
+            setIsLoading(true);
+            try {
+                const isValid = await certificateApi.validatePDFFile(validatePDFFileRequest);
+                return isValid;
             } finally {
                 setIsLoading(false);
             }
@@ -68,8 +104,11 @@ export function CertificateProvider({ children }: { children: React.ReactNode })
         fetchAllPreCertificates,
         fetchOneCertificateById,
         registerNewPreCertificate,
-        issuePreCertificate
-    }), [certificates, isLoading, fetchAllPreCertificates, fetchOneCertificateById, registerNewPreCertificate, issuePreCertificate]);
+        issuePreCertificate,
+        registerPDFHash,
+        validateCertificate,
+        validatePDFFile,
+    }), [certificates, isLoading, fetchAllPreCertificates, fetchOneCertificateById, registerNewPreCertificate, issuePreCertificate, registerPDFHash, validateCertificate, validatePDFFile]);
 
     return (
         <CertificateContext value={contextValue}>

@@ -9,7 +9,10 @@ export function AuditorProvider({ children }: { children: React.ReactNode }) {
 
     // Fetch all auditors
     const fetchAllAuditors = useCallback(
-        async (): Promise<Auditor[]> => {
+        async ({ force }: { force?: boolean } = { force: false }): Promise<Auditor[]> => {
+            if (auditors && !force) {
+                return Promise.resolve(auditors);
+            }
             setIsLoading(true);
             try {
                 const fetchedAuditors = await auditorApi.fetchAuditors();
@@ -18,7 +21,7 @@ export function AuditorProvider({ children }: { children: React.ReactNode }) {
             } finally {
                 setIsLoading(false);
             }
-        }, []);
+        }, [auditors]);
 
     // Fetch one auditor by ID
     const fetchOneAuditorById = useCallback(

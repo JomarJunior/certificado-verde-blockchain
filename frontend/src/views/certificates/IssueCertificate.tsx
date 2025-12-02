@@ -16,23 +16,6 @@ import { useProductContext } from "../../hooks/useProduct";
 import defaultTheme from "../../themes/default";
 import printTheme from "../../themes/print";
 
-/**
- *
- * Certificate Emission Sequence
- *
- * 1. Select Pre-Certificate (from PreCertificatesOverview)
- * 2. Redirect to IssueCertificate (this page) with pre-certificate ID
- * 3. Fetch Pre-Certificate details using the ID
- * 4. Display Pre-Certificate details for review
- * 5. Ask for confirmation from the user (certifier)
- * 6. On confirmation, use ethers to sign the pre-certificate's 'pre_issued_hash'
- * 7. Create an IssueCertificateRequest with the signature and address of the certifier
- * 8. Send the IssueCertificateRequest to the backend API
- * 9. Handle the response from the backend (success or failure)
- * 10. On success, display the issued certificate details to the user along with the qr code's image and download link
- *
- */
-
 interface SignPreIssueHashResponse {
     signature: string;
     certifier_address: string;

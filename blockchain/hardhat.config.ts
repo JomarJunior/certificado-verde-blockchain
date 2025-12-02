@@ -8,7 +8,7 @@ export const networks = {
     },
     docker: {
         url: "http://blockchain:8545",
-        chainId: 31337
+        chainId: 1337
     }
 };
 

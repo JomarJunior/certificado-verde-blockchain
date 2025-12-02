@@ -100,12 +100,12 @@ export const certificateApi = {
         const response = await httpClient.post<RegisterPDFHashResponse>(`${BASE_PATH}/${id}/pdf_hash`, registerPDFHashRequest);
         return response.data.pdf_hash;
     },
-    validateCertificate: async (certificateHash: string): Promise<boolean> => {
+    validateCertificate: async (certificateHash: string): Promise<ValidateCertificateResponse> => {
         const response = await httpClient.get<ValidateCertificateResponse>(`${BASE_PATH}/validate/${certificateHash}`);
-        return response.data.is_valid;
+        return response.data;
     },
-    validatePDFFile: async (validatePDFFileRequest: ValidatePDFFileRequest): Promise<boolean> => {
+    validatePDFFile: async (validatePDFFileRequest: ValidatePDFFileRequest): Promise<ValidatePDFFileResponse> => {
         const response = await httpClient.post<ValidatePDFFileResponse>(`${BASE_PATH}/validate/pdf`, validatePDFFileRequest);
-        return response.data.is_valid;
+        return response.data;
     }
 };

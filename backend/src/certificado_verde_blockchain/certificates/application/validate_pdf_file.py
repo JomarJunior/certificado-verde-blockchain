@@ -43,6 +43,8 @@ class ValidatePDFFileHandler:
             }
         )
 
+        await self._logger.info(f"Validating PDF file with hash: {pdf_hash}")
+
         certificate: Optional[Certificate] = self._repository.find_by_pdf_hash(pdf_hash)
         if not certificate:
             raise DomainException("No certificate found matching the provided PDF file.", code=404)

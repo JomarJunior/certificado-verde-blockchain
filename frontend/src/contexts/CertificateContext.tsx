@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import type { Certificate, CertificateRegisterData, IssueCertificateRequest, RegisterPDFHashRequest, ValidatePDFFileRequest } from '../api/certificate-api';
+import type { Certificate, CertificateRegisterData, IssueCertificateRequest, RegisterPDFHashRequest, ValidateCertificateResponse, ValidatePDFFileRequest, ValidatePDFFileResponse } from '../api/certificate-api';
 import { certificateApi } from '../api/certificate-api';
 import { CertificateContext, defaultCertificateContextProps, type CertificateContextProps } from '../hooks/useCertificate';
 
@@ -76,7 +76,7 @@ export function CertificateProvider({ children }: { children: React.ReactNode })
 
     // Validate Certificate
     const validateCertificate = useCallback(
-        async (certificateHash: string): Promise<boolean> => {
+        async (certificateHash: string): Promise<ValidateCertificateResponse> => {
             setIsLoading(true);
             try {
                 const isValid = await certificateApi.validateCertificate(certificateHash);
@@ -88,7 +88,7 @@ export function CertificateProvider({ children }: { children: React.ReactNode })
 
     // Validate PDF File
     const validatePDFFile = useCallback(
-        async (validatePDFFileRequest: ValidatePDFFileRequest): Promise<boolean> => {
+        async (validatePDFFileRequest: ValidatePDFFileRequest): Promise<ValidatePDFFileResponse> => {
             setIsLoading(true);
             try {
                 const isValid = await certificateApi.validatePDFFile(validatePDFFileRequest);

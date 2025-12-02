@@ -1,5 +1,5 @@
 import { createContext, use } from "react";
-import type { Certificate, CertificateRegisterData, IssueCertificateRequest, RegisterPDFHashRequest, ValidatePDFFileRequest } from "../api/certificate-api";
+import type { Certificate, CertificateRegisterData, IssueCertificateRequest, RegisterPDFHashRequest, ValidateCertificateResponse, ValidatePDFFileRequest, ValidatePDFFileResponse } from "../api/certificate-api";
 
 export interface CertificateContextProps {
     // State
@@ -11,8 +11,8 @@ export interface CertificateContextProps {
     registerNewPreCertificate: (certificateData: CertificateRegisterData) => Promise<Certificate>;
     issuePreCertificate: (id: string, issueCertificateRequest: IssueCertificateRequest) => Promise<Certificate>;
     registerPDFHash: (id: string, registerPDFHashRequest: RegisterPDFHashRequest) => Promise<string>;
-    validateCertificate: (certificateHash: string) => Promise<boolean>;
-    validatePDFFile: (validatePDFFileRequest: ValidatePDFFileRequest) => Promise<boolean>;
+    validateCertificate: (certificateHash: string) => Promise<ValidateCertificateResponse>;
+    validatePDFFile: (validatePDFFileRequest: ValidatePDFFileRequest) => Promise<ValidatePDFFileResponse>;
 }
 
 export const defaultCertificateContextProps: CertificateContextProps = {

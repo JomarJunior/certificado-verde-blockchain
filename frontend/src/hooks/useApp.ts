@@ -1,11 +1,14 @@
 import { createContext, use } from 'react';
 
+import type { HealthStatus } from '../api/health-api';
 export interface AppContextType {
     documentTitle: string;
-    setDocumentTitle: (title: string) => void;
     isDrawerOpen: boolean;
     isBigScreen: boolean;
+    isServerHealthy?: boolean;
+    setDocumentTitle: (title: string) => void;
     toggleDrawer: () => void;
+    fetchServerHealth: () => Promise<HealthStatus>;
 }
 
 export const AppContext = createContext<AppContextType | undefined>(undefined);

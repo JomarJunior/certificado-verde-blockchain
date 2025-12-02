@@ -118,10 +118,15 @@ const HomePage: React.FC = () => {
                 </Grid>
                 <Grid container spacing={3} justifyContent={'center'} alignItems={'start'} textAlign={'center'}>
                     {homeNavigationItems.map((section) => (
-                        <Grid size={4} key={section.label} sx={{ mt: 4 }}>
+                        <Grid
+                            key={section.label}
+                            size={3}
+                            sx={{ mt: 4 }}
+                            flexGrow={1}
+                        >
                             <Typography
                                 fontFamily={'bungee'}
-                                fontSize={'19pt'}
+                                fontSize={'18pt'}
                                 variant="h5"
                                 component="h2"
                                 gutterBottom

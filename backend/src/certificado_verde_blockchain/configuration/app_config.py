@@ -13,6 +13,7 @@ class AppConfig(BaseConfig):
         "/certificado-verde-blockchain/api",
         description="The root path for the application",
     )
+    app_domain: Annotated[str, Field(description="The domain name of the application")]
     debug_mode: Annotated[bool, Field(description="Flag to indicate if the app is running in debug mode")] = Field(
         False,
         description="Flag to indicate if the app is running in debug mode",
@@ -35,4 +36,4 @@ class AppConfig(BaseConfig):
         return f"http://{self.host}:{self.port}{self.root_path}/{self.major_version}"
 
     def get_qr_code_url_by_key(self, key: str) -> str:
-        return f"{self.api_url.replace('0.0.0.0', 'localhost')}/certificates/qr_codes/{key}"
+        return f"{self.app_domain}{self.root_path}/{self.major_version}/certificates/qr_codes/{key}"

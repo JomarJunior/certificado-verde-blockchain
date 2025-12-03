@@ -44,6 +44,8 @@ services:
       - "traefik.http.services.nginx.loadbalancer.server.port=80"
       - "traefik.http.middlewares.stripcertificado.stripprefix.prefixes=/certificado-verde-blockchain"
       - "traefik.http.routers.nginx.middlewares=stripcertificado"
+    env_file:
+      - frontend/.env
     depends_on:
       - backend
       - traefik
@@ -57,6 +59,9 @@ services:
       context: frontend
       dockerfile: Dockerfile
     container_name: frontend-app
+    env_file:
+      - frontend/.env
+      - .env
     ports:
       - "3000:3000"
     volumes:

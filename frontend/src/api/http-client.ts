@@ -1,10 +1,16 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
+const baseUrl = import.meta.env.VITE_DEBUG_MODE === 'true'
+    ? "https://cvb.127.0.0.1.nip.io/certificado-verde-blockchain/api/v1"
+    : "/certificado-verde-blockchain/api/v1";
+
+console.log(baseUrl);
+
 const httpClient = axios.create({
-    baseURL: `/certificado-verde-blockchain/api/v1`,
+    baseURL: baseUrl,
     httpsAgent: {
-        rejectUnauthorized: false
-    }
+        rejectUnauthorized: import.meta.env.VITE_DEBUG_MODE !== 'true',
+    },
 });
 
 const setupInterceptors = (getToken: () => string | null, refreshToken: () => Promise<boolean>) => {

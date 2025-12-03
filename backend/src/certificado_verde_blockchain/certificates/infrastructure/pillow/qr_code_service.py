@@ -1,5 +1,3 @@
-import json
-import os
 from io import BytesIO
 from typing import Any, Mapping
 
@@ -35,7 +33,7 @@ class QRCodeService(IQRCodeService):
             payload: QRCodePayload = {
                 "certificate_id": certificate_id,
                 "canonical_hash": canonical_hash,
-                "verify_url": os.path.join(self.config.verify_url_template, certificate_id),
+                "verify_url": self.config.verify_url_template,
             }
             qr = qrcode.QRCode(
                 version=self.config.version,
@@ -43,7 +41,7 @@ class QRCodeService(IQRCodeService):
                 box_size=self.config.box_size,
                 border=self.config.border,
             )
-            qr.add_data(json.dumps(payload))
+            qr.add_data(f"{payload['verify_url']}?id={payload['certificate_id']}")
             qr.make(fit=True)
 
             img = qr.make_image(fill_color="black", back_color="white")

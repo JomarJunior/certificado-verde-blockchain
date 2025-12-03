@@ -132,6 +132,8 @@ services:
       context: backend
       dockerfile: Dockerfile
     container_name: backend-server
+    expose:
+      - "8000"
     volumes:
       - ./backend:/app
       - ./blockchain/artifacts/contracts:/abi

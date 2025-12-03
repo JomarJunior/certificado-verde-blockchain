@@ -36,8 +36,8 @@ jobs:
 
       - name: Build and push image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/cvb-frontend:latest nginx/
-          docker push ghcr.io/${{ github.repository_owner }}/cvb-frontend:latest
+          docker build -t ghcr.io/${{ github.repository }}/cvb-frontend:latest nginx/
+          docker push ghcr.io/${{ github.repository }}/cvb-frontend:latest
 
   deploy:
     needs: build

@@ -69,7 +69,7 @@ api:
   # Purpose: Enables the web-based dashboard for visual monitoring
   # Why useful: Real-time view of routes, services, middlewares, and health status
   # Access: Usually available at http://localhost:8080 (or configured port)
-  dashboard: true
+  dashboard: false
   
   # INSECURE MODE
   # Purpose: Allows API/dashboard access without authentication

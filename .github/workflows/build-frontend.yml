@@ -25,6 +25,14 @@ jobs:
         working-directory: frontend
         run: npm run build
 
+      - name: Pre-compress JS and CSS
+        working-directory: frontend
+        run: |
+          find ./dist -type f -name "*.js" -exec brotli -Z {} \;
+          find ./dist -type f -name "*.css" -exec brotli -Z {} \;
+          find ./dist -type f -name "*.js" -exec gzip -k -9 {} \;
+          find ./dist -type f -name "*.css" -exec gzip -k -9 {} \;
+
       - name: Prepare nginx image
         run: |
           rm -rf nginx/dist

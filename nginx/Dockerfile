@@ -1,4 +1,4 @@
-FROM nginxinc/nginx:stable-brotli
+FROM nginx:alpine
 
 # remove default site
 RUN rm -rf /usr/share/nginx/html/*

@@ -29,8 +29,6 @@ services:
     container_name: nginx-frontend
     expose:
       - "80"
-    volumes:
-      - ./frontend/dist:/usr/share/nginx/html:ro
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.nginx.rule=Host(`cvb.159.65.243.11.nip.io`) && PathPrefix(`/certificado-verde-blockchain`)"
@@ -94,13 +92,18 @@ services:
       context: backend
       dockerfile: Dockerfile
     container_name: backend-server
-    ports:
-      - "8000:8000"
     volumes:
       - ./backend:/app
       - ./blockchain/artifacts/contracts:/abi
     environment:
       - BLOCKCHAIN_URL=http://blockchain:8545
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`${APPLICATION_DOMAIN}`) && PathPrefix(`/certificado-verde-blockchain/api`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.routers.backend.tls=true"
+      - "traefik.http.routers.backend.tls.certresolver=staging"
+      - "traefik.http.services.backend.loadbalancer.server.port=8000"
     depends_on:
       - blockchain
     networks:
@@ -116,8 +119,6 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    environment:
-      - VITE_BACKEND_URL=http://localhost:8000
     depends_on:
       - backend
     networks:

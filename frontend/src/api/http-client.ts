@@ -1,7 +1,7 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
 const httpClient = axios.create({
-    baseURL: `${import.meta.env.VITE_BACKEND_URL}/certificado-verde-blockchain/api/v1`,
+    baseURL: `/certificado-verde-blockchain/api/v1`,
     httpsAgent: {
         rejectUnauthorized: false
     }

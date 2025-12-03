@@ -25,7 +25,7 @@ services:
     restart: always
 
   nginx:
-    image: ghcr.io/JomarJunior/cvb-frontend:latest
+    image: ghcr.io/jomarjunior/certificado-verde-blockchain/cvb-frontend:latest
     container_name: nginx-frontend
     expose:
       - "80"

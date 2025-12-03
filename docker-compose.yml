@@ -1,4 +1,7 @@
 services:
+#----------------------
+# Traefik Reverse Proxy
+#----------------------
   traefik:
     container_name: cvb-traefik
     image: traefik:v3.6.2
@@ -23,7 +26,10 @@ services:
     networks:
       - cvb-network
     restart: always
-
+#----------------------
+# Frontend Service
+#----------------------
+# Production frontend service using nginx
   nginx:
     image: ghcr.io/jomarjunior/certificado-verde-blockchain/cvb-frontend:latest
     container_name: nginx-frontend
@@ -38,10 +44,33 @@ services:
       - "traefik.http.services.nginx.loadbalancer.server.port=80"
       - "traefik.http.middlewares.stripcertificado.stripprefix.prefixes=/certificado-verde-blockchain"
       - "traefik.http.routers.nginx.middlewares=stripcertificado"
+    depends_on:
+      - backend
+      - traefik
     networks:
       - cvb-network
     restart: always
 
+# Development frontend service using Node.js
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: frontend-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - cvb-network
+
+#----------------------
+# Blockchain Services
+#----------------------
+# Local blockchain node
   blockchain:
     build:
       context: blockchain
@@ -61,6 +90,7 @@ services:
     networks:
       - cvb-network
 
+# Deployment of smart contracts
   blockchain-deploy:
     build:
       context: blockchain
@@ -75,6 +105,7 @@ services:
     networks:
       - cvb-network
 
+# Running tests against the blockchain
   blockchain-tests:
     build:
       context: blockchain
@@ -87,6 +118,10 @@ services:
       - /app/node_modules
     entrypoint: npx hardhat test
 
+#----------------------
+# Backend Service
+#----------------------
+# Backend API service
   backend:
     build:
       context: backend
@@ -106,24 +141,18 @@ services:
       - "traefik.http.services.backend.loadbalancer.server.port=8000"
     depends_on:
       - blockchain
+      - database
+      - minio
+      - traefik
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/certificado-verde-blockchain/api/v1/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - cvb-network
 
-  frontend:
-    build:
-      context: frontend
-      dockerfile: Dockerfile
-    container_name: frontend-app
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    depends_on:
-      - backend
-    networks:
-      - cvb-network
-
+# Database Service
   database:
     image: postgres:18.0-alpine
     restart: always
@@ -138,6 +167,7 @@ services:
     networks:
       - cvb-network
 
+# MinIO Service
   minio:
     image: minio/minio:latest
     container_name: minio

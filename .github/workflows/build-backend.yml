@@ -45,6 +45,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "\
             cd /opt/certificado-verde-blockchain && \
+            git pull origin main && \
             docker compose pull backend && \
             docker compose up -d --no-deps --force-recreate backend && \
             docker exec backend-server poetry run alembic upgrade head && \

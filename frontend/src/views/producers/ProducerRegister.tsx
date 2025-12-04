@@ -8,147 +8,147 @@ import { useProducerContext } from "../../hooks/useProducer";
 
 const exampleProducers: ProducerRegisterData[] = [
     {
-        "name": "Fazenda Verde Ltda.",
+        "name": "Cooperativa Açaí da Amazônia",
         "document": {
             "document_type": "CNPJ",
-            "number": "98.765.432/0001-10"
+            "number": "12.345.678/0001-90"
         },
         "address": {
             "country": "Brasil",
-            "state": "São Paulo",
-            "city": "São Paulo",
+            "state": "Pará",
+            "city": "Belém",
             "coordinates": {
-                "latitude": -23.5505,
-                "longitude": -46.6333
+                "latitude": -1.4558,
+                "longitude": -48.5044
             }
         },
-        "car_code": "9876543210987",
+        "car_code": "PA-1234567890123",
         "contact": {
-            "phone": "+55 11 98765-4321",
-            "email": "info@verdefazenda.com",
-            "website": "https://www.verdefazenda.com"
+            "phone": "+55 91 98765-4321",
+            "email": "contato@acaiamazonia.com",
+            "website": "https://www.acaiamazonia.com"
         },
         "metadata": {
-            "foundation_year": 2000,
+            "foundation_year": 2005,
             "certifications": [
-                "Organic Certification",
+                "Orgânico Brasil",
+                "Rainforest Alliance"
+            ]
+        }
+    },
+    {
+        "name": "Castanha do Brasil Sustentável",
+        "document": {
+            "document_type": "CNPJ",
+            "number": "23.456.789/0001-11"
+        },
+        "address": {
+            "country": "Brasil",
+            "state": "Amazonas",
+            "city": "Manaus",
+            "coordinates": {
+                "latitude": -3.1190,
+                "longitude": -60.0217
+            }
+        },
+        "car_code": "AM-2345678901234",
+        "contact": {
+            "phone": "+55 92 99876-5432",
+            "email": "info@castanhaamazonica.com",
+            "website": "https://www.castanhaamazonica.com"
+        },
+        "metadata": {
+            "foundation_year": 2008,
+            "certifications": [
+                "FSC",
                 "Fair Trade"
             ]
         }
     },
     {
-        "name": "Agro Sustentável S.A.",
+        "name": "Produtores de Guaraná Nativo",
         "document": {
             "document_type": "CNPJ",
-            "number": "11.222.333/0001-44"
+            "number": "34.567.890/0001-22"
         },
         "address": {
             "country": "Brasil",
-            "state": "Minas Gerais",
-            "city": "Belo Horizonte",
+            "state": "Amazonas",
+            "city": "Maués",
             "coordinates": {
-                "latitude": -19.9191,
-                "longitude": -43.9386
+                "latitude": -3.4150,
+                "longitude": -57.7183
             }
         },
-        "car_code": "1122334455667",
+        "car_code": "AM-3456789012345",
         "contact": {
-            "phone": "+55 31 99887-6655",
-            "email": "contact@agrosustentavel.com",
-            "website": "https://www.agrosustentavel.com"
+            "phone": "+55 92 99765-4321",
+            "email": "contato@guarananativo.com",
+            "website": "https://www.guarananativo.com"
         },
         "metadata": {
             "foundation_year": 2010,
             "certifications": [
-                "UTZ Certified",
-                "Biodynamic"
+                "Denominação de Origem",
+                "Orgânico"
             ]
         }
     },
     {
-        "name": "EcoFazenda Brasil",
+        "name": "Associação Extrativista da Floresta",
         "document": {
             "document_type": "CNPJ",
-            "number": "55.666.777/0001-88"
+            "number": "45.678.901/0001-33"
         },
         "address": {
             "country": "Brasil",
-            "state": "Rio de Janeiro",
-            "city": "Rio de Janeiro",
+            "state": "Acre",
+            "city": "Rio Branco",
             "coordinates": {
-                "latitude": -22.9068,
-                "longitude": -43.1729
+                "latitude": -9.9747,
+                "longitude": -67.8100
             }
         },
-        "car_code": "5566778899001",
+        "car_code": "AC-4567890123456",
         "contact": {
-            "phone": "+55 21 98777-8899",
-            "email": "hello@ecofazenda.com",
-            "website": "https://www.ecofazenda.com"
+            "phone": "+55 68 99654-3210",
+            "email": "associacao@extrativistafloresta.com",
+            "website": "https://www.extrativistafloresta.com"
         },
         "metadata": {
-            "foundation_year": 1998,
+            "foundation_year": 2012,
             "certifications": [
-                "Rainforest Alliance",
-                "ISO 22000"
+                "Manejo Florestal Sustentável",
+                "FSC"
             ]
         }
     },
     {
-        "name": "Terra Viva Produtores",
+        "name": "Cooperativa Frutas da Amazônia",
         "document": {
             "document_type": "CNPJ",
-            "number": "77.888.999/0001-22"
+            "number": "56.789.012/0001-44"
         },
         "address": {
             "country": "Brasil",
-            "state": "Bahia",
-            "city": "Salvador",
+            "state": "Rondônia",
+            "city": "Porto Velho",
             "coordinates": {
-                "latitude": -12.9714,
-                "longitude": -38.5014
+                "latitude": -8.7612,
+                "longitude": -63.9004
             }
         },
-        "car_code": "7788990011223",
+        "car_code": "RO-5678901234567",
         "contact": {
-            "phone": "+55 71 99666-5544",
-            "email": "support@terraviva.com",
-            "website": "https://www.terraviva.com"
-        },
-        "metadata": {
-            "foundation_year": 2005,
-            "certifications": [
-                "4C Association",
-                "Organic"
-            ]
-        }
-    },
-    {
-        "name": "Produtores do Cerrado Ltda.",
-        "document": {
-            "document_type": "CNPJ",
-            "number": "33.444.555/0001-66"
-        },
-        "address": {
-            "country": "Brasil",
-            "state": "Goiás",
-            "city": "Goiânia",
-            "coordinates": {
-                "latitude": -16.6869,
-                "longitude": -49.2648
-            }
-        },
-        "car_code": "3344556677889",
-        "contact": {
-            "phone": "+55 62 99555-4433",
-            "email": "info@cerradoprodutores.com",
-            "website": "https://www.cerradoprodutores.com"
+            "phone": "+55 69 99543-2109",
+            "email": "frutas@amazoniaverde.com",
+            "website": "https://www.frutasdaamazonia.com"
         },
         "metadata": {
             "foundation_year": 2015,
             "certifications": [
-                "Sustainable Palm Oil",
-                "Fairtrade"
+                "Agricultura Familiar",
+                "Rainforest Alliance"
             ]
         }
     }
@@ -480,7 +480,6 @@ const ProducerRegister: React.FC = () => {
                         onClick={handleFillExample}
                         startIcon={<Icon>auto_fix_high</Icon>}
                         disabled={(producers?.length ?? 99) >= exampleProducers.length}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Preencher Exemplo
                         {(producers?.length ?? 99) < exampleProducers.length ? ` (${(producers?.length ?? 99) + 1}/${exampleProducers.length})` : ''}
@@ -490,7 +489,6 @@ const ProducerRegister: React.FC = () => {
                         color="primary"
                         onClick={handleSubmit}
                         startIcon={<Icon>send</Icon>}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Registrar Produtor
                     </Button>

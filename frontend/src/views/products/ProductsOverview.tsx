@@ -64,7 +64,6 @@ const ProductsOverview: React.FC = () => {
                             <Icon>add</Icon>
                         )}
                         onClick={handleOpenRegisterModal}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Cadastrar Novo Produto
                     </Button>

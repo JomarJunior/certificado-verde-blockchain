@@ -59,7 +59,6 @@ const AuditorsOverview: React.FC = () => {
                             <Icon>add</Icon>
                         )}
                         onClick={handleOpenRegisterModal}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Cadastrar Novo Auditor
                     </Button>

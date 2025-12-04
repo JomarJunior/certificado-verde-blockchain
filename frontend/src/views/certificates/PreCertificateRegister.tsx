@@ -239,7 +239,6 @@ const PreCertificateRegister: React.FC = () => {
                         onClick={handleFillExample}
                         startIcon={<Icon>auto_fix_high</Icon>}
                         disabled={(certificates?.length ?? 99) >= exampleCertificates.length}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Preencher Exemplo
                         {certificates && certificates.length < exampleCertificates.length ? ` (${certificates.length + 1}/${exampleCertificates.length})` : ''}
@@ -249,7 +248,6 @@ const PreCertificateRegister: React.FC = () => {
                         color="primary"
                         onClick={handleSubmit}
                         startIcon={<Icon>send</Icon>}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Pre-Registrar Certificado
                     </Button>

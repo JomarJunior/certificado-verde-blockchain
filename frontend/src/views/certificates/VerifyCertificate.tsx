@@ -276,7 +276,6 @@ const VerifyCertificate: React.FC = () => {
                                     sx={{ mt: 3, alignSelf: { xs: 'stretch', sm: 'flex-start' } }}
                                     disabled={!certificateIdInput.trim() || isVerifying}
                                     startIcon={<Icon>{isVerifying ? 'hourglass_empty' : 'search'}</Icon>}
-                                    fullWidth={{ xs: true, sm: false }}
                                 >
                                     {isVerifying ? 'Verificando...' : 'Verificar'}
                                 </Button>
@@ -330,7 +329,6 @@ const VerifyCertificate: React.FC = () => {
                                     sx={{ mt: 3, alignSelf: { xs: 'stretch', sm: 'flex-start' } }}
                                     disabled={!selectedPdfFile || isVerifying}
                                     startIcon={<Icon>{isVerifying ? 'hourglass_empty' : 'verified'}</Icon>}
-                                    fullWidth={{ xs: true, sm: false }}
                                 >
                                     {isVerifying ? 'Verificando...' : 'Verificar PDF'}
                                 </Button>
@@ -379,7 +377,6 @@ const VerifyCertificate: React.FC = () => {
                                     variant="contained"
                                     onClick={handleDisplayCertificate}
                                     startIcon={<Icon>visibility</Icon>}
-                                    fullWidth={{ xs: true, sm: false }}
                                 >
                                     Visualizar Certificado Completo
                                 </Button>
@@ -388,7 +385,6 @@ const VerifyCertificate: React.FC = () => {
                                 variant="outlined"
                                 onClick={handleClear}
                                 startIcon={<Icon>refresh</Icon>}
-                                fullWidth={{ xs: true, sm: false }}
                             >
                                 Nova Verificação
                             </Button>

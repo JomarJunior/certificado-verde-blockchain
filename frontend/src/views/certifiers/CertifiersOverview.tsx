@@ -61,7 +61,6 @@ const CertifiersOverview: React.FC = () => {
                             <Icon>add</Icon>
                         )}
                         onClick={handleOpenRegisterModal}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Cadastrar Nova Certificadora
                     </Button>

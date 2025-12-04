@@ -20,13 +20,6 @@ export default function AppBar({
         void navigate('/');
     }
 
-    const searchLabel = (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-            <MuiMaterial.Icon sx={{ fontSize: '1rem', verticalAlign: 'middle' }}>search</MuiMaterial.Icon>
-            <span style={{ marginLeft: 8 }}>Search</span>
-        </div>
-    );
-
     return (
         <MuiMaterial.AppBar
             sx={{
@@ -60,7 +53,7 @@ export default function AppBar({
                         >
                             <MuiMaterial.Link onClick={handleGoHome} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
                                 <MuiMaterial.Icon sx={{ mr: { xs: 1, sm: 2 }, fontSize: 'inherit', verticalAlign: 'middle' }}>{icon}</MuiMaterial.Icon>
-                                <span style={{ display: 'inline-block', whiteSpace: { xs: 'normal', md: 'nowrap' } }}>{title}</span>
+                                <span style={{ display: 'inline-block' }}>{title}</span>
                             </MuiMaterial.Link>
                         </MuiMaterial.Typography>
                     </div>

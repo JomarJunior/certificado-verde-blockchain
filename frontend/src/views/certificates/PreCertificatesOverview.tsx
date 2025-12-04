@@ -111,7 +111,6 @@ const PreCertificatesOverview: React.FC = () => {
                             <Icon>add</Icon>
                         )}
                         onClick={handleOpenRegisterModal}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Cadastrar Novo Pre-Certificado
                     </Button>

@@ -8,42 +8,42 @@ import { useCertifierContext } from "../../hooks/useCertifier";
 
 const exampleCertifiers: CertifierRegisterData[] = [
     {
-        name: "Instituto de Certificação Sustentável",
+        name: "Instituto Amazônia Sustentável",
         document: {
             document_type: "CNPJ",
-            number: "98.765.432/0001-21"
+            number: "12.345.678/0001-90"
         },
         auditors: []
     },
     {
-        name: "Certificadora Ambiental Brasil",
+        name: "Certificadora Floresta Viva Brasil",
         document: {
             document_type: "CNPJ",
-            number: "12.345.678/0001-99"
+            number: "23.456.789/0001-11"
         },
         auditors: []
     },
     {
-        name: "Verde Certificações Ltda",
+        name: "Verde Amazônia Certificações",
         document: {
             document_type: "CNPJ",
-            number: "55.666.777/0001-88"
+            number: "34.567.890/0001-22"
         },
         auditors: []
     },
     {
-        name: "Instituto Verde Sustentável",
+        name: "Instituto de Manejo Florestal da Amazônia",
         document: {
             document_type: "CNPJ",
-            number: "77.888.999/0001-77"
+            number: "45.678.901/0001-33"
         },
         auditors: []
     },
     {
-        name: "Certificações Eco Brasil",
+        name: "Certificadora Rainforest Amazônia",
         document: {
             document_type: "CNPJ",
-            number: "33.444.555/0001-66"
+            number: "56.789.012/0001-44"
         },
         auditors: []
     }
@@ -220,7 +220,6 @@ const CertifierRegister: React.FC = () => {
                         onClick={handleFillExample}
                         startIcon={<Icon>auto_fix_high</Icon>}
                         disabled={(certifiers?.length ?? 99) >= exampleCertifiers.length}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Preencher Exemplo
                         {certifiers && certifiers.length < exampleCertifiers.length ? ` (${certifiers.length + 1}/${exampleCertifiers.length})` : ''}
@@ -230,7 +229,6 @@ const CertifierRegister: React.FC = () => {
                         color="primary"
                         onClick={handleSubmit}
                         startIcon={<Icon>send</Icon>}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Registrar Certificadora
                     </Button>

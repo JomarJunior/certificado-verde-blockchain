@@ -8,38 +8,38 @@ import { useAuditorContext } from "../../hooks/useAuditor";
 
 const exampleAuditors: AuditorRegisterData[] = [
     {
-        name: "João da Silva",
+        name: "Dr. Amazonino Silva Santos",
         document: {
             document_type: "CREA",
-            number: "1234567890"
+            number: "PA-123456789"
         }
     },
     {
-        name: "Maria Oliveira",
+        name: "Dra. Floresta Verde Oliveira",
         document: {
             document_type: "CRBIO",
-            number: "0987654321"
+            number: "AM-987654321"
         }
     },
     {
-        name: "Carlos Pereira",
+        name: "Eng. Manoel Ribeiro da Amazônia",
         document: {
             document_type: "INMETRO",
-            number: "1122334455"
+            number: "AC-112233445"
         }
     },
     {
-        name: "Ana Santos",
+        name: "Bióloga Ana Floresta Santos",
         document: {
-            document_type: "OTHER",
-            number: "5566778899"
+            document_type: "CRBIO",
+            number: "RO-556677889"
         }
     },
     {
-        name: "Pedro Lima",
+        name: "Eng. Agr. Pedro Amazonas Lima",
         document: {
             document_type: "CREA",
-            number: "6677889900"
+            number: "AM-667788990"
         }
     }
 ]
@@ -181,7 +181,6 @@ const AuditorRegister: React.FC = () => {
                         onClick={handleFillExample}
                         startIcon={<Icon>auto_fix_high</Icon>}
                         disabled={(auditors?.length ?? 99) >= exampleAuditors.length}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Preencher Exemplo
                         {auditors && auditors.length < exampleAuditors.length ? ` (${auditors.length + 1}/${exampleAuditors.length})` : ''}
@@ -191,7 +190,6 @@ const AuditorRegister: React.FC = () => {
                         color="primary"
                         onClick={handleSubmit}
                         startIcon={<Icon>send</Icon>}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Registrar Auditor
                     </Button>

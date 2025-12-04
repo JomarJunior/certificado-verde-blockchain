@@ -62,58 +62,58 @@ const validateQuantityUnit = (value: ValueType): string | null => {
 
 const exampleProducts: ProductRegisterData[] = [
     {
-        name: 'Banana Orgânica',
-        description: 'Banana orgânica cultivada sem pesticidas.',
+        name: 'Açaí Orgânico',
+        description: 'Polpa de açaí extraída de forma sustentável na Amazônia.',
         category: 'FRUIT',
-        quantity: { value: 100, unit: 'KG' },
-        origin: { country: 'Brasil', coordinates: { latitude: -1.4558, longitude: -48.5044 } },
-        lot_number: 'L12345',
-        carbon_emission: 12.5,
-        tags: ['orgânico', 'comércio justo'],
+        quantity: { value: 500, unit: 'KG' },
+        origin: { country: 'Brasil', state: 'Pará', city: 'Belém', coordinates: { latitude: -1.4558, longitude: -48.5044 } },
+        lot_number: 'AC-2024-001',
+        carbon_emission: 5.2,
+        tags: ['orgânico', 'amazônia', 'extrativismo sustentável'],
         metadata: {},
     },
     {
-        name: 'Café Arábica',
-        description: 'Café arábica de alta qualidade, torrado recentemente.',
+        name: 'Castanha-do-Pará',
+        description: 'Castanhas coletadas por comunidades tradicionais da floresta amazônica.',
+        category: 'RESOURCE',
+        quantity: { value: 200, unit: 'KG' },
+        origin: { country: 'Brasil', state: 'Amazonas', city: 'Manaus', coordinates: { latitude: -3.1190, longitude: -60.0217 } },
+        lot_number: 'CP-2024-002',
+        carbon_emission: 3.5,
+        tags: ['orgânico', 'fair trade', 'floresta amazônica'],
+        metadata: {},
+    },
+    {
+        name: 'Guaraná em Pó',
+        description: 'Guaraná nativo de Maués, processado artesanalmente.',
         category: 'GRAIN',
         quantity: { value: 50, unit: 'KG' },
-        origin: { country: 'Colômbia', coordinates: { latitude: 4.5709, longitude: -74.2973 } },
-        lot_number: 'C67890',
-        carbon_emission: 8.3,
-        tags: ['premium', 'sustentável'],
+        origin: { country: 'Brasil', state: 'Amazonas', city: 'Maués', coordinates: { latitude: -3.4150, longitude: -57.7183 } },
+        lot_number: 'GR-2024-003',
+        carbon_emission: 4.8,
+        tags: ['nativo', 'denominação de origem', 'energético natural'],
         metadata: {},
     },
     {
-        name: 'Arroz Integral',
-        description: 'Arroz integral cultivado em fazendas locais.',
-        category: 'GRAIN',
-        quantity: { value: 200, unit: 'KG' },
-        origin: { country: 'Índia', coordinates: { latitude: 20.5937, longitude: 78.9629 } },
-        lot_number: 'R11111',
-        carbon_emission: 15.2,
-        tags: ['integral', 'local'],
-        metadata: {},
-    },
-    {
-        name: 'Mel de Abelha',
-        description: 'Mel puro extraído de colmeias orgânicas.',
+        name: 'Óleo de Copaíba',
+        description: 'Óleo essencial extraído de forma sustentável da árvore de copaíba.',
         category: 'RESOURCE',
-        quantity: { value: 20, unit: 'LITERS' },
-        origin: { country: 'Argentina', coordinates: { latitude: -38.4161, longitude: -63.6167 } },
-        lot_number: 'M22222',
-        carbon_emission: 5.7,
-        tags: ['orgânico', 'natural'],
+        quantity: { value: 10, unit: 'LITERS' },
+        origin: { country: 'Brasil', state: 'Acre', city: 'Rio Branco', coordinates: { latitude: -9.9747, longitude: -67.8100 } },
+        lot_number: 'CP-2024-004',
+        carbon_emission: 2.1,
+        tags: ['medicinal', 'manejo sustentável', 'óleo essencial'],
         metadata: {},
     },
     {
-        name: 'Tomate Cereja',
-        description: 'Tomates cereja frescos e suculentos.',
+        name: 'Cupuaçu Polpa',
+        description: 'Polpa de cupuaçu, fruta típica da Amazônia, rica em antioxidantes.',
         category: 'FRUIT',
-        quantity: { value: 30, unit: 'KG' },
-        origin: { country: 'Espanha', coordinates: { latitude: 40.4637, longitude: -3.7492 } },
-        lot_number: 'T33333',
-        carbon_emission: 9.1,
-        tags: ['fresco', 'sazonal'],
+        quantity: { value: 300, unit: 'KG' },
+        origin: { country: 'Brasil', state: 'Rondônia', city: 'Porto Velho', coordinates: { latitude: -8.7612, longitude: -63.9004 } },
+        lot_number: 'CU-2024-005',
+        carbon_emission: 6.3,
+        tags: ['amazônico', 'antioxidante', 'agricultura familiar'],
         metadata: {},
     }
 ];
@@ -391,7 +391,6 @@ const ProductRegister: React.FC = () => {
                         onClick={handleFillExample}
                         startIcon={<Icon>auto_fix_high</Icon>}
                         disabled={(products?.length ?? 99) >= exampleProducts.length}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Preencher Exemplo
                         {products && products.length < exampleProducts.length ? ` (${products.length + 1}/${exampleProducts.length})` : ''}
@@ -401,7 +400,6 @@ const ProductRegister: React.FC = () => {
                         color="primary"
                         onClick={handleSubmit}
                         startIcon={<Icon>send</Icon>}
-                        fullWidth={{ xs: true, sm: false }}
                     >
                         Registrar Produto
                     </Button>

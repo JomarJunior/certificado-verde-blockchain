@@ -81,7 +81,7 @@ const HomePage: React.FC = () => {
                     <Grid size={12} textAlign={'center'}>
                         <Typography
                             fontFamily={'bungee'}
-                            fontSize={'72pt'}
+                            sx={{ fontSize: { xs: '2rem', sm: '3rem', md: '4rem', lg: '72pt' } }}
                             variant="h2"
                             component="h1"
                             gutterBottom
@@ -90,10 +90,10 @@ const HomePage: React.FC = () => {
                         </Typography>
                         <Divider />
                     </Grid>
-                    <Grid size={3} justifyContent={'center'} alignContent={'end'}>
+                    <Grid size={{ xs: 12, sm: 3 }} justifyContent={'center'} alignContent={'end'} textAlign={'center'}>
                         <Typography
                             fontFamily={'bungee'}
-                            fontSize={'128pt'}
+                            sx={{ fontSize: { xs: '4rem', sm: '6rem', md: '8rem', lg: '128pt' } }}
                             variant="h1"
                             component="h1"
                             gutterBottom
@@ -101,10 +101,10 @@ const HomePage: React.FC = () => {
                             🌱
                         </Typography>
                     </Grid>
-                    <Grid size={9}>
+                    <Grid size={{ xs: 12, sm: 9 }}>
                         <Typography
                             fontFamily={'bungee'}
-                            fontSize={'72pt'}
+                            sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '3rem', lg: '72pt' } }}
                             variant="h4"
                             component="h1"
                             gutterBottom
@@ -120,13 +120,12 @@ const HomePage: React.FC = () => {
                     {homeNavigationItems.map((section) => (
                         <Grid
                             key={section.label}
-                            size={3}
+                            size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
                             sx={{ mt: 4 }}
-                            flexGrow={1}
                         >
                             <Typography
                                 fontFamily={'bungee'}
-                                fontSize={'18pt'}
+                                sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem', md: '18pt' } }}
                                 variant="h5"
                                 component="h2"
                                 gutterBottom

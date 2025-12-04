@@ -1,6 +1,6 @@
+import { Box, Divider, Drawer, Icon, List, ListItem, ListItemAvatar, ListItemButton, ListItemText } from "@mui/material";
 import React from "react";
-import { Drawer, Box, Divider, List, ListItem, ListItemAvatar, ListItemText, Icon, ListItemButton } from "@mui/material";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useApp } from "../hooks/useApp";
 
 const drawerWidth = import.meta.env.VITE_DRAWER_WIDTH as string ?? '300px';
@@ -20,12 +20,16 @@ interface AppDrawerProps {
 export default function AppDrawer({
     items
 }: AppDrawerProps) {
-    const { isDrawerOpen, toggleDrawer } = useApp();
+    const { isDrawerOpen, toggleDrawer, isBigScreen } = useApp();
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleNavigation = (to: string) => {
         void navigate(to);
+        // Close drawer on mobile after navigation
+        if (!isBigScreen) {
+            toggleDrawer();
+        }
     }
 
     const renderDrawerItems = (items: AppDrawerItem[]) => {
@@ -85,11 +89,17 @@ export default function AppDrawer({
         <>
             <Drawer
                 anchor="left"
-                variant="persistent"
+                variant={isBigScreen ? "persistent" : "temporary"}
                 open={isDrawerOpen}
                 onClose={toggleDrawer}
                 sx={{
                     width: drawerWidth,
+                    '& .MuiDrawer-paper': {
+                        width: drawerWidth,
+                    }
+                }}
+                ModalProps={{
+                    keepMounted: true, // Better mobile performance
                 }}
             >
                 <Box

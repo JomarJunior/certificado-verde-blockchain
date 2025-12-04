@@ -34,9 +34,64 @@ const App: React.FC = () => {
       to: "/",
     },
     {
-      label: "Image Scroller",
-      icon: "image",
-      to: "/scroller",
+      label: "Produtos",
+      icon: "inventory_2",
+      children: [
+        {
+          label: "Listar Produtos",
+          icon: "list",
+          to: "/products",
+        },
+      ]
+    },
+    {
+      label: "Produtores",
+      icon: "agriculture",
+      children: [
+        {
+          label: "Listar Produtores",
+          icon: "list",
+          to: "/producers",
+        },
+      ]
+    },
+    {
+      label: "Auditores",
+      icon: "verified_user",
+      children: [
+        {
+          label: "Listar Auditores",
+          icon: "list",
+          to: "/auditors",
+        },
+      ]
+    },
+    {
+      label: "Certificadoras",
+      icon: "business",
+      children: [
+        {
+          label: "Listar Certificadoras",
+          icon: "list",
+          to: "/certifiers",
+        },
+      ]
+    },
+    {
+      label: "Certificados Verdes",
+      icon: "eco",
+      children: [
+        {
+          label: "Listar Pré-Certificados",
+          icon: "list",
+          to: "/certificates/pre-issued",
+        },
+        {
+          label: "Verificar Certificado",
+          icon: "verified",
+          to: "/certificates/verify",
+        },
+      ]
     },
   ];
 

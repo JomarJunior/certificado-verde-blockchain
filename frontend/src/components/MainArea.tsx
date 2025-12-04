@@ -9,31 +9,28 @@ interface MainAreaProps {
     children: React.ReactNode;
 }
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' && prop !== 'isBigScreen' })<{
     open?: boolean;
-}>(({ theme }) => ({
+    isBigScreen?: boolean;
+}>(({ theme, open, isBigScreen }) => ({
     flexGrow: 1,
     transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
+        easing: open ? theme.transitions.easing.easeOut : theme.transitions.easing.sharp,
+        duration: open ? theme.transitions.duration.enteringScreen : theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: `${drawerWidth}`,
     minHeight: getAvailableSpace().height,
-    width: `calc(100% - ${drawerWidth})`,
     padding: 0,
-    variants: [
-        {
-            props: ({ open }) => !open,
-            style: {
-                transition: theme.transitions.create(['margin', 'width'], {
-                    easing: theme.transitions.easing.sharp,
-                    duration: theme.transitions.duration.leavingScreen,
-                }),
-                marginLeft: 0,
-                width: '100%',
-            },
-        },
-    ],
+    // On mobile, always full width (temporary drawer overlays)
+    [theme.breakpoints.down('sm')]: {
+        marginTop: import.meta.env.VITE_APPBAR_HEIGHT as string ?? '64px',
+        marginLeft: 0,
+        width: '100%',
+    },
+    // On big screens with persistent drawer
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: open && isBigScreen ? `${drawerWidth}` : 0,
+        width: open && isBigScreen ? `calc(100% - ${drawerWidth})` : '100%',
+    },
 }));
 
 const MainArea: React.FC<MainAreaProps> = ({
@@ -59,10 +56,14 @@ const MainArea: React.FC<MainAreaProps> = ({
     };
 
     return (
-        <Main open={isDrawerOpen} sx={{
-            marginTop: marginTop(),
-            paddingBottom: marginBottom(),
-        }}>
+        <Main
+            open={isDrawerOpen}
+            isBigScreen={isBigScreen}
+            sx={{
+                marginTop: marginTop(),
+                paddingBottom: marginBottom(),
+            }}
+        >
             <br />
             {children}
         </Main>

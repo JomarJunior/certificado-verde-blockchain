@@ -59,27 +59,36 @@ const ProducersOverview: React.FC = () => {
                 <Typography variant="h4" component="h1" gutterBottom fontFamily={'bungee'}>
                     👨‍🌾 Visão Geral dos Produtores
                 </Typography>
-                <Box display={'flex'} flexWrap={'wrap'} justifyContent={'space-between'} alignItems={'center'}>
+                <Box display={'flex'} flexDirection={{ xs: 'column', sm: 'row' }} justifyContent={'space-between'} alignItems={{ xs: 'stretch', sm: 'center' }} gap={2}>
                     <Typography variant="body1">
                         Total de produtores cadastrados: {producers ? producers.length : 0}
                     </Typography>
                     <Button
                         variant="contained"
                         color="primary"
-                        sx={{ marginTop: 2 }}
                         startIcon={(
                             <Icon>add</Icon>
                         )}
                         onClick={handleOpenRegisterModal}
+                        fullWidth={{ xs: true, sm: false }}
                     >
                         Cadastrar Novo Produtor
                     </Button>
                 </Box>
-                <DataGrid
-                    sx={{ marginTop: 5 }}
-                    rows={producers || []}
-                    columns={columns}
-                />
+                <Box sx={{ width: '100%', overflowX: 'auto', marginTop: 5 }}>
+                    <DataGrid
+                        sx={{ minWidth: 650 }}
+                        rows={producers || []}
+                        columns={columns}
+                        autoHeight
+                        pageSizeOptions={[5, 10, 25]}
+                        initialState={{
+                            pagination: {
+                                paginationModel: { pageSize: 10 },
+                            },
+                        }}
+                    />
+                </Box>
             </Paper>
             <ViewModal
                 open={showRegisterModal}

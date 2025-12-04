@@ -378,30 +378,33 @@ const ProductRegister: React.FC = () => {
                     </Grid>
                 </Grid>
                 <Divider sx={{ marginY: 4 }} />
-                <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                    <Box sx={{ marginLeft: 2 }}>
-                        <Button
-                            variant="outlined"
-                            onClick={handleFillExample}
-                            sx={{ marginLeft: 2 }}
-                            startIcon={<Icon>auto_fix_high</Icon>}
-                            disabled={(products?.length ?? 99) >= exampleProducts.length}
-                        >
-                            Preencher Exemplo
-                            {products && products.length < exampleProducts.length ? ` (${products.length + 1}/${exampleProducts.length})` : ''}
-                        </Button>
-                    </Box>
-                    <Box sx={{ marginRight: 2 }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSubmit}
-                            sx={{ marginX: "auto" }}
-                            startIcon={<Icon>send</Icon>}
-                        >
-                            Registrar Produto
-                        </Button>
-                    </Box>
+                <Box
+                    display="flex"
+                    flexDirection={{ xs: 'column', sm: 'row' }}
+                    justifyContent="space-between"
+                    alignItems={{ xs: 'stretch', sm: 'center' }}
+                    gap={2}
+                    sx={{ px: { xs: 0, sm: 2 } }}
+                >
+                    <Button
+                        variant="outlined"
+                        onClick={handleFillExample}
+                        startIcon={<Icon>auto_fix_high</Icon>}
+                        disabled={(products?.length ?? 99) >= exampleProducts.length}
+                        fullWidth={{ xs: true, sm: false }}
+                    >
+                        Preencher Exemplo
+                        {products && products.length < exampleProducts.length ? ` (${products.length + 1}/${exampleProducts.length})` : ''}
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        startIcon={<Icon>send</Icon>}
+                        fullWidth={{ xs: true, sm: false }}
+                    >
+                        Registrar Produto
+                    </Button>
                 </Box>
             </Paper>
         </Container>

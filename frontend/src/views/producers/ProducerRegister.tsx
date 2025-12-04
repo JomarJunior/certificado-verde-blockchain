@@ -467,30 +467,33 @@ const ProducerRegister: React.FC = () => {
                     </Grid>
                 </Grid>
                 <Divider sx={{ marginY: 4 }} />
-                <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                    <Box sx={{ marginLeft: 2 }}>
-                        <Button
-                            variant="outlined"
-                            onClick={handleFillExample}
-                            sx={{ marginLeft: 2 }}
-                            startIcon={<Icon>auto_fix_high</Icon>}
-                            disabled={(producers?.length ?? 99) >= exampleProducers.length}
-                        >
-                            Preencher Exemplo
-                            {(producers?.length ?? 99) < exampleProducers.length ? ` (${(producers?.length ?? 99) + 1}/${exampleProducers.length})` : ''}
-                        </Button>
-                    </Box>
-                    <Box sx={{ marginRight: 2 }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSubmit}
-                            sx={{ marginX: "auto" }}
-                            startIcon={<Icon>send</Icon>}
-                        >
-                            Registrar Produtor
-                        </Button>
-                    </Box>
+                <Box
+                    display="flex"
+                    flexDirection={{ xs: 'column', sm: 'row' }}
+                    justifyContent="space-between"
+                    alignItems={{ xs: 'stretch', sm: 'center' }}
+                    gap={2}
+                    sx={{ px: { xs: 0, sm: 2 } }}
+                >
+                    <Button
+                        variant="outlined"
+                        onClick={handleFillExample}
+                        startIcon={<Icon>auto_fix_high</Icon>}
+                        disabled={(producers?.length ?? 99) >= exampleProducers.length}
+                        fullWidth={{ xs: true, sm: false }}
+                    >
+                        Preencher Exemplo
+                        {(producers?.length ?? 99) < exampleProducers.length ? ` (${(producers?.length ?? 99) + 1}/${exampleProducers.length})` : ''}
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        startIcon={<Icon>send</Icon>}
+                        fullWidth={{ xs: true, sm: false }}
+                    >
+                        Registrar Produtor
+                    </Button>
                 </Box>
             </Paper>
         </Container>

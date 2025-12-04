@@ -48,21 +48,21 @@ export default function AppBar({
                         >
                             <MuiMaterial.Icon>menu</MuiMaterial.Icon>
                         </MuiMaterial.IconButton>
-                        <MuiMaterial.Typography variant="h4" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
-                            <MuiMaterial.Link onClick={handleGoHome} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer' }}>
-                                <MuiMaterial.Icon sx={{ mr: 2, fontSize: 'inherit', verticalAlign: 'middle' }}>{icon}</MuiMaterial.Icon>
-                                {title}
+                        <MuiMaterial.Typography
+                            variant="h4"
+                            sx={{
+                                flexGrow: 1,
+                                fontWeight: 'bold',
+                                fontSize: { xs: '1.2rem', sm: '1.5rem', md: '2rem' },
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <MuiMaterial.Link onClick={handleGoHome} style={{ textDecoration: 'none', color: 'inherit', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                <MuiMaterial.Icon sx={{ mr: { xs: 1, sm: 2 }, fontSize: 'inherit', verticalAlign: 'middle' }}>{icon}</MuiMaterial.Icon>
+                                <span style={{ display: 'inline-block', whiteSpace: { xs: 'normal', md: 'nowrap' } }}>{title}</span>
                             </MuiMaterial.Link>
                         </MuiMaterial.Typography>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <MuiMaterial.Autocomplete
-                            sx={{ width: 300, display: { xs: 'none', sm: 'block' }, mr: 2 }}
-                            options={[]}
-                            renderInput={(params) => <MuiMaterial.TextField {...params} label={searchLabel} variant="outlined" />}
-                            popupIcon={null}
-                        />
                     </div>
                 </div>
 

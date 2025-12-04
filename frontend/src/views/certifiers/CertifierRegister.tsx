@@ -207,30 +207,33 @@ const CertifierRegister: React.FC = () => {
                     </Grid>
                 </Grid>
                 <Divider sx={{ marginY: 4 }} />
-                <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                    <Box sx={{ marginLeft: 2 }}>
-                        <Button
-                            variant="outlined"
-                            onClick={handleFillExample}
-                            sx={{ marginLeft: 2 }}
-                            startIcon={<Icon>auto_fix_high</Icon>}
-                            disabled={(certifiers?.length ?? 99) >= exampleCertifiers.length}
-                        >
-                            Preencher Exemplo
-                            {certifiers && certifiers.length < exampleCertifiers.length ? ` (${certifiers.length + 1}/${exampleCertifiers.length})` : ''}
-                        </Button>
-                    </Box>
-                    <Box sx={{ marginRight: 2 }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSubmit}
-                            sx={{ marginX: "auto" }}
-                            startIcon={<Icon>send</Icon>}
-                        >
-                            Registrar Certificadora
-                        </Button>
-                    </Box>
+                <Box
+                    display="flex"
+                    flexDirection={{ xs: 'column', sm: 'row' }}
+                    justifyContent="space-between"
+                    alignItems={{ xs: 'stretch', sm: 'center' }}
+                    gap={2}
+                    sx={{ px: { xs: 0, sm: 2 } }}
+                >
+                    <Button
+                        variant="outlined"
+                        onClick={handleFillExample}
+                        startIcon={<Icon>auto_fix_high</Icon>}
+                        disabled={(certifiers?.length ?? 99) >= exampleCertifiers.length}
+                        fullWidth={{ xs: true, sm: false }}
+                    >
+                        Preencher Exemplo
+                        {certifiers && certifiers.length < exampleCertifiers.length ? ` (${certifiers.length + 1}/${exampleCertifiers.length})` : ''}
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        startIcon={<Icon>send</Icon>}
+                        fullWidth={{ xs: true, sm: false }}
+                    >
+                        Registrar Certificadora
+                    </Button>
                 </Box>
             </Paper>
         </Container>

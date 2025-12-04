@@ -44,15 +44,15 @@ const signPreIssueHash = async (preIssuedHash: string): Promise<SignPreIssueHash
 }
 
 const CertificateItem: React.FC<{ label: string; value: string; icon?: React.ReactNode }> = ({ label, value, icon }) => (
-    <Stack direction="row" spacing={2} alignItems="center" mb={2}>
+    <Stack direction="row" spacing={{ xs: 1, sm: 2 }} alignItems="center" mb={2}>
         {icon && (
-            <Stack>
+            <Stack sx={{ display: { xs: 'none', sm: 'block' } }}>
                 {icon}
             </Stack>
         )}
         <Stack>
-            <Typography fontSize={24}>{label}</Typography>
-            <Typography fontSize={18} color="textSecondary">{value}</Typography>
+            <Typography sx={{ fontSize: { xs: '1rem', sm: '1.2rem', md: 24 } }}>{label}</Typography>
+            <Typography sx={{ fontSize: { xs: '0.875rem', sm: '1rem', md: 18 }, wordBreak: 'break-word' }} color="textSecondary">{value}</Typography>
         </Stack>
     </Stack>
 );
@@ -69,7 +69,12 @@ const NORM_EMOJI_MAP: Record<string, string> = {
 const NormBadge: React.FC<{ norm: string }> = ({ norm }) => (
     <Chip
         label={`${NORM_EMOJI_MAP[norm] || '✅'} ${norm}`}
-        sx={{ margin: 0.5, fontSize: '25pt', padding: '25px', fontFamily: 'bungee' }}
+        sx={{
+            margin: 0.5,
+            fontSize: { xs: '0.75rem', sm: '1rem', md: '25pt' },
+            padding: { xs: '8px', sm: '15px', md: '25px' },
+            fontFamily: 'bungee'
+        }}
         color="primary"
     />
 );
@@ -89,7 +94,12 @@ const SC_EMOJI_MAP: Record<string, string> = {
 const SustainabilityCriterionBadge: React.FC<{ criterion: string }> = ({ criterion }) => (
     <Chip
         label={`${SC_EMOJI_MAP[criterion] || '✅'} ${criterion}`}
-        sx={{ margin: 0.5, fontSize: '25pt', padding: '25px', fontFamily: 'bungee' }}
+        sx={{
+            margin: 0.5,
+            fontSize: { xs: '0.75rem', sm: '1rem', md: '25pt' },
+            padding: { xs: '8px', sm: '15px', md: '25px' },
+            fontFamily: 'bungee'
+        }}
         color="secondary"
     />
 );
@@ -246,15 +256,19 @@ const IssueCertificate: React.FC = () => {
             <Container maxWidth="xl">
                 <Paper elevation={3} sx={{ padding: 2, marginBottom: 4 }}>
                     {isIssued && (
-                        <Box display={'flex'} justifyContent={'end'} alignItems={'center'} mb={2}>
+                        <Box display={'flex'} justifyContent={{ xs: 'center', sm: 'end' }} alignItems={'center'} mb={2}>
                             <Button
                                 variant="contained"
                                 color="primary"
                                 size="large"
-                                sx={{ fontFamily: 'bungee', fontSize: '18pt', padding: '10px 20px' }}
+                                sx={{
+                                    fontFamily: 'bungee',
+                                    fontSize: { xs: '0.875rem', sm: '1rem', md: '18pt' },
+                                    padding: { xs: '8px 16px', sm: '10px 20px' }
+                                }}
                                 onClick={handleDownloadCertificate}
                             >
-                                <Icon sx={{ marginRight: 5 }}>download</Icon>
+                                <Icon sx={{ marginRight: { xs: 1, sm: 5 } }}>download</Icon>
                                 Download
                             </Button>
                         </Box>
@@ -262,27 +276,27 @@ const IssueCertificate: React.FC = () => {
                     <span ref={targetRef as React.RefObject<HTMLDivElement>}>
                         <Grid container spacing={0} alignItems="center" justifyContent={"center"} mb={2}>
                             {isIssued && (
-                                <Grid size={1} display="flex" justifyContent="center" alignItems="center">
+                                <Grid size={{ xs: 12, md: 1 }} display="flex" justifyContent="center" alignItems="center" sx={{ mb: { xs: 2, md: 0 } }}>
                                     {preCertificate.authenticity_proof && preCertificate.authenticity_proof.qr_code_url && (
                                         <img
                                             src={preCertificate.authenticity_proof.qr_code_url}
                                             alt="QR Code do Certificado"
-                                            style={{ maxWidth: '200px', height: 'auto', marginLeft: '100px' }}
+                                            style={{ maxWidth: '150px', width: '100%', height: 'auto', marginLeft: 0 }}
                                         />)}
                                 </Grid>
                             )}
-                            <Grid size={isIssued ? 11 : 12}>
+                            <Grid size={{ xs: 12, md: isIssued ? 11 : 12 }}>
                                 <Box display="flex" flexDirection={'column'} justifyContent="center" alignItems="center" mb={2}>
                                     {!isIssued ? (
-                                        <Typography gutterBottom fontFamily={'bungee'} fontSize={'72pt'}>
+                                        <Typography gutterBottom fontFamily={'bungee'} sx={{ fontSize: { xs: '2rem', sm: '3rem', md: '72pt' } }} textAlign="center">
                                             Emitir Certificado
                                         </Typography>
                                     ) : (
                                         <Box textAlign={'center'}>
-                                            <Typography gutterBottom fontFamily={'bungee'} fontSize={'72pt'}>
+                                            <Typography gutterBottom fontFamily={'bungee'} sx={{ fontSize: { xs: '1.5rem', sm: '2.5rem', md: '72pt' } }}>
                                                 Certificado <span style={{ color: defaultTheme.palette.success.main }}>Verde</span>
                                             </Typography>
-                                            <Typography gutterBottom fontFamily={'bungee'} fontSize={'72pt'}>
+                                            <Typography gutterBottom fontFamily={'bungee'} sx={{ fontSize: { xs: '1.5rem', sm: '2.5rem', md: '72pt' } }}>
                                                 Blockchain
                                             </Typography>
                                         </Box>
@@ -294,18 +308,28 @@ const IssueCertificate: React.FC = () => {
                         <Box>
                             <Grid container spacing={2}>
                                 <Grid size={12} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-                                    <Typography gutterBottom fontFamily={'Fira Mono'} fontSize={'36pt'} fontWeight={'bold'}>
+                                    <Typography
+                                        gutterBottom
+                                        fontFamily={'Fira Mono'}
+                                        sx={{
+                                            fontSize: { xs: '0.75rem', sm: '1.5rem', md: '36pt' },
+                                            wordBreak: 'break-all',
+                                            textAlign: 'center',
+                                            px: { xs: 1, sm: 2 }
+                                        }}
+                                        fontWeight={'bold'}
+                                    >
                                         {preCertificate.id}
                                     </Typography>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={2}>
                                 <Grid size={12}>
-                                    <Typography variant="h5" gutterBottom fontFamily={'bungee'}>
+                                    <Typography variant="h5" gutterBottom fontFamily={'bungee'} sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
                                         Detalhes do Produto
                                     </Typography>
                                 </Grid>
-                                <Grid size={6}>
+                                <Grid size={{ xs: 12, md: 6 }}>
                                     <CertificateItem
                                         label="Nome"
                                         value={product.name}
@@ -336,7 +360,7 @@ const IssueCertificate: React.FC = () => {
                                         )}
                                     />
                                 </Grid>
-                                <Grid size={6}>
+                                <Grid size={{ xs: 12, md: 6 }}>
                                     <CertificateItem
                                         label="Quantidade"
                                         value={`${product.quantity.value} ${product.quantity.unit}`}
@@ -367,7 +391,7 @@ const IssueCertificate: React.FC = () => {
                                         />
                                     }
                                 </Grid>
-                                <Grid size={12} display={'flex'} alignItems={'center'} justifyContent={'space-evenly'}>
+                                <Grid size={12} display={'flex'} flexDirection={{ xs: 'column', md: 'row' }} alignItems={'center'} justifyContent={'space-evenly'}>
                                     {product.carbon_emission &&
                                         <CertificateItem
                                             label="Emissão de Carbono"
@@ -407,11 +431,11 @@ const IssueCertificate: React.FC = () => {
                                     }
                                 </Grid>
                                 <Grid size={12}>
-                                    <Typography variant="h5" gutterBottom fontFamily={'bungee'}>
+                                    <Typography variant="h5" gutterBottom fontFamily={'bungee'} sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
                                         Detalhes do Produtor
                                     </Typography>
                                 </Grid>
-                                <Grid size={6}>
+                                <Grid size={{ xs: 12, md: 6 }}>
                                     <CertificateItem
                                         label="Nome"
                                         value={producer.name}
@@ -431,7 +455,7 @@ const IssueCertificate: React.FC = () => {
                                         )}
                                     />
                                 </Grid>
-                                <Grid size={6}>
+                                <Grid size={{ xs: 12, md: 6 }}>
                                     <CertificateItem
                                         label="Endereço"
                                         value={`${producer.address.city ? producer.address.city + ', ' : ''}${producer.address.state ? producer.address.state + ', ' : ''}${producer.address.country}`}
@@ -451,7 +475,7 @@ const IssueCertificate: React.FC = () => {
                                         )}
                                     />
                                 </Grid>
-                                <Grid size={12} display={'flex'} alignItems={'center'} justifyContent={'space-evenly'}>
+                                <Grid size={12} display={'flex'} flexDirection={{ xs: 'column', md: 'row' }} alignItems={'center'} justifyContent={'space-evenly'}>
                                     {producer.car_code &&
                                         <CertificateItem
                                             label="Código CAR"
@@ -479,11 +503,11 @@ const IssueCertificate: React.FC = () => {
                                     }
                                 </Grid>
                                 <Grid size={12}>
-                                    <Typography variant="h5" gutterBottom fontFamily={'bungee'}>
+                                    <Typography variant="h5" gutterBottom fontFamily={'bungee'} sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
                                         Detalhes da Certificadora
                                     </Typography>
                                 </Grid>
-                                <Grid size={6}>
+                                <Grid size={{ xs: 12, md: 6 }}>
                                     <CertificateItem
                                         label="Nome"
                                         value={certifier.name}
@@ -503,7 +527,7 @@ const IssueCertificate: React.FC = () => {
                                         )}
                                     />
                                 </Grid>
-                                <Grid size={6}>
+                                <Grid size={{ xs: 12, md: 6 }}>
                                     <CertificateItem
                                         label={`${certifier.auditors.length === 1 ? 'Auditor' : 'Auditores'}`}
                                         value={certifier.auditors.map(a => a.name).join(', ')}
@@ -515,11 +539,11 @@ const IssueCertificate: React.FC = () => {
                                     />
                                 </Grid>
                                 <Grid size={12}>
-                                    <Typography variant="h5" gutterBottom fontFamily={'bungee'}>
+                                    <Typography variant="h5" gutterBottom fontFamily={'bungee'} sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
                                         Normas Cumpridas
                                     </Typography>
                                 </Grid>
-                                <Grid size={12} display={'flex'} justifyContent={'space-around'}>
+                                <Grid size={12} display={'flex'} flexWrap={'wrap'} justifyContent={{ xs: 'center', md: 'space-around' }}>
                                     {preCertificate.norms_complied && preCertificate.norms_complied.length > 0 ? (
                                         preCertificate.norms_complied.map((norm) => (
                                             <NormBadge key={norm} norm={norm} />
@@ -529,11 +553,11 @@ const IssueCertificate: React.FC = () => {
                                     )}
                                 </Grid>
                                 <Grid size={12}>
-                                    <Typography variant="h5" gutterBottom fontFamily={'bungee'}>
+                                    <Typography variant="h5" gutterBottom fontFamily={'bungee'} sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
                                         Critérios de Sustentabilidade
                                     </Typography>
                                 </Grid>
-                                <Grid size={12} display={'flex'} justifyContent={'space-around'}>
+                                <Grid size={12} display={'flex'} flexWrap={'wrap'} justifyContent={{ xs: 'center', md: 'space-around' }}>
                                     {preCertificate.sustainability_criteria && preCertificate.sustainability_criteria.length > 0 ? (
                                         preCertificate.sustainability_criteria.map((criterion) => (
                                             <SustainabilityCriterionBadge key={criterion} criterion={criterion} />
@@ -545,7 +569,7 @@ const IssueCertificate: React.FC = () => {
                                 {preCertificate.notes &&
                                     <>
                                         <Grid size={12}>
-                                            <Typography variant="h5" gutterBottom fontFamily={'bungee'}>
+                                            <Typography variant="h5" gutterBottom fontFamily={'bungee'} sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
                                                 Notas Adicionais
                                             </Typography>
                                         </Grid>
@@ -581,9 +605,13 @@ const IssueCertificate: React.FC = () => {
                                 color="primary"
                                 size="large"
                                 onClick={handleOpenConfirmationModal}
-                                sx={{ fontFamily: 'bungee', fontSize: '24pt', padding: '15px 30px' }}
+                                sx={{
+                                    fontFamily: 'bungee',
+                                    fontSize: { xs: '1rem', sm: '1.5rem', md: '24pt' },
+                                    padding: { xs: '10px 20px', sm: '15px 30px' }
+                                }}
                             >
-                                <Icon sx={{ marginRight: 5 }}>check</Icon>
+                                <Icon sx={{ marginRight: { xs: 2, sm: 5 } }}>check</Icon>
                                 Emitir Certificado
                             </Button>
                         </Box>
@@ -592,18 +620,20 @@ const IssueCertificate: React.FC = () => {
                 <Dialog
                     open={showConfirmationModal}
                     onClose={handleCloseConfirmationModal}
+                    fullWidth
+                    maxWidth="sm"
                 >
-                    <Paper sx={{ padding: 4, minWidth: 400 }}>
-                        <Typography variant="h3" gutterBottom fontFamily={'bungee'}>
+                    <Paper sx={{ padding: { xs: 2, sm: 4 }, minWidth: { xs: 'auto', sm: 400 } }}>
+                        <Typography variant="h3" gutterBottom fontFamily={'bungee'} sx={{ fontSize: { xs: '1.5rem', sm: '2rem', md: '3rem' } }}>
                             Confirmação de Emissão
                         </Typography>
-                        <Typography fontSize={18} mb={4}>
+                        <Typography sx={{ fontSize: { xs: '0.875rem', sm: '1rem', md: 18 } }} mb={4}>
                             Ao clicar em "Confirmar e Emitir", você estará assinando digitalmente o pré-certificado com sua carteira Ethereum conectada (MetaMask) e emitindo o certificado oficial.
                         </Typography>
-                        <Typography fontSize={18} mb={4}>
+                        <Typography sx={{ fontSize: { xs: '0.875rem', sm: '1rem', md: 18 } }} mb={4}>
                             Essa ação é irreversível e registrará o certificado na blockchain, garantindo sua autenticidade e rastreabilidade.
                         </Typography>
-                        <Box display="flex" justifyContent="flex-end" gap={2}>
+                        <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} justifyContent="flex-end" gap={2}>
                             <Button
                                 variant="outlined"
                                 color="secondary"

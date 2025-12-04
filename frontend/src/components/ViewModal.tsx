@@ -14,11 +14,22 @@ const ViewModal: React.FC<ViewModalProps> = ({ open, onClose, title, displayBack
     }
 
     return (
-        <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth
+        <Dialog
+            open={open}
+            onClose={onClose}
+            maxWidth="xl"
+            fullWidth
+            fullScreen={false}
+            scroll="paper"
             sx={{
                 '& .MuiDialog-paper': {
-                    overflowY: 'visible',
+                    overflowY: 'auto',
                     backgroundColor: displayBackgroundOverlay ? 'rgba(0, 0, 0, 0.5)' : 'transparent',
+                    maxHeight: { xs: '90vh', sm: '90vh', md: 'calc(100vh - 64px)' },
+                    margin: { xs: 2, sm: 3 },
+                },
+                '& .MuiDialogContent-root': {
+                    overflowY: 'auto',
                 },
             }}
             slotProps={{

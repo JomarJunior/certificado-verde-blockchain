@@ -273,9 +273,10 @@ const VerifyCertificate: React.FC = () => {
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    sx={{ mt: 3, alignSelf: "flex-start" }}
+                                    sx={{ mt: 3, alignSelf: { xs: 'stretch', sm: 'flex-start' } }}
                                     disabled={!certificateIdInput.trim() || isVerifying}
                                     startIcon={<Icon>{isVerifying ? 'hourglass_empty' : 'search'}</Icon>}
+                                    fullWidth={{ xs: true, sm: false }}
                                 >
                                     {isVerifying ? 'Verificando...' : 'Verificar'}
                                 </Button>
@@ -326,9 +327,10 @@ const VerifyCertificate: React.FC = () => {
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    sx={{ mt: 3, alignSelf: "flex-start" }}
+                                    sx={{ mt: 3, alignSelf: { xs: 'stretch', sm: 'flex-start' } }}
                                     disabled={!selectedPdfFile || isVerifying}
                                     startIcon={<Icon>{isVerifying ? 'hourglass_empty' : 'verified'}</Icon>}
+                                    fullWidth={{ xs: true, sm: false }}
                                 >
                                     {isVerifying ? 'Verificando...' : 'Verificar PDF'}
                                 </Button>
@@ -361,22 +363,23 @@ const VerifyCertificate: React.FC = () => {
                         )}
 
                         {certificate && isValid && (
-                            <Box sx={{ mt: 2, p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
-                                <Typography variant="subtitle1" fontWeight="bold">Informações do Certificado:</Typography>
-                                <Typography variant="body2">ID: {certificate.id}</Typography>
-                                <Typography variant="body2">Versão: {certificate.version}</Typography>
+                            <Box sx={{ mt: 2, p: { xs: 1.5, sm: 2 }, border: '1px solid #e0e0e0', borderRadius: 1 }}>
+                                <Typography variant="subtitle1" fontWeight="bold" sx={{ mb: 1 }}>Informações do Certificado:</Typography>
+                                <Typography variant="body2" sx={{ wordBreak: 'break-all', mb: 0.5 }}>ID: {certificate.id}</Typography>
+                                <Typography variant="body2" sx={{ mb: 0.5 }}>Versão: {certificate.version}</Typography>
                                 {certificate.issued_at && (
                                     <Typography variant="body2">Emitido em: {new Date(certificate.issued_at).toLocaleDateString()}</Typography>
                                 )}
                             </Box>
                         )}
 
-                        <Box display="flex" flexDirection="row" gap={2} sx={{ mt: 3 }}>
+                        <Box display="flex" flexDirection={{ xs: 'column', sm: 'row' }} gap={2} sx={{ mt: 3 }}>
                             {isValid && certificate && (
                                 <Button
                                     variant="contained"
                                     onClick={handleDisplayCertificate}
                                     startIcon={<Icon>visibility</Icon>}
+                                    fullWidth={{ xs: true, sm: false }}
                                 >
                                     Visualizar Certificado Completo
                                 </Button>
@@ -385,6 +388,7 @@ const VerifyCertificate: React.FC = () => {
                                 variant="outlined"
                                 onClick={handleClear}
                                 startIcon={<Icon>refresh</Icon>}
+                                fullWidth={{ xs: true, sm: false }}
                             >
                                 Nova Verificação
                             </Button>

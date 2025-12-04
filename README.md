@@ -2,6 +2,11 @@
 
 Este trabalho é apresentado como requisito parcial para aprovação na disciplina de **Engenharias e Sociedades** da ementa comum dos cursos de *Engenharia* da **Universidade Federal do Rio de Janeiro (UFRJ)**.
 
+## 🌐 Website
+
+O website do projeto está disponível em: \
+**<https://cvb.159.65.243.11.nip.io/certificado-verde-blockchain>**
+
 ## 👨‍💻 Autores
 
 > **Jomar Júnior de Souza Pereira** \[[GitHub](https://github.com/JomarJunior)\] \
@@ -145,18 +150,18 @@ O certificado verde blockchain é desenvolvido para apresentação na disciplina
 
 #### ❇️ Emissão de Certificado Verde Blockchain
 
-- 🚧 Interface simples para cadastro
-- 🚧 Modelo padronizado de dados
-- 🚧 Registro `hash` no blockchain
+- ✅ Interface simples para cadastro
+- ✅ Modelo padronizado de dados
+- ✅ Registro `hash` no blockchain
 
 #### 🥸 Consulta Pública
 
-- 🚧 Página de verificação do certificado
-- 🚧 Prova criptográfica do documento
+- ✅ Página de verificação do certificado
+- ✅ Prova criptográfica do documento
 
 #### 👮 Auditoria Básica
 
-- 🚧 Histórico imutável
+- ✅ Histórico imutável
 - 🚧 Lista de alterações
 - 🚧 Logs de quem emitiu e quando
 
